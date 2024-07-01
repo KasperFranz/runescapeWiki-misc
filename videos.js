@@ -1,8 +1,8 @@
 const {google} = require("googleapis");
 const {Duration} = require("luxon");
 const fs = require('node:fs');
-const { Readable } = require('stream');
-const { finished } = require('stream/promises');
+const {Readable} = require('stream');
+const {finished} = require('stream/promises');
 
 
 require('dotenv').config()
@@ -35,7 +35,7 @@ function getVideoDetails(videoId) {
     const service = google.youtube('v3');
     service.videos.list({
         auth: process.env.GOOGLE_API_KEY,
-        part: 'snippet,contentDetails,statistics',
+        part: 'snippet,contentDetails',
         id: videoId
     }, function (err, data) {
         if (err) {
@@ -66,10 +66,12 @@ function formatCategory(title) {
         return 'Patch notes'
     }
 
-    if(title.includes('Dev Diary')){
+    if (title.includes('Dev Diary')) {
         return 'Dev Diary';
     }
+
     console.log("UNKNOWN subject!");
+    return '';
 }
 
 function formatName(title) {
@@ -77,7 +79,7 @@ function formatName(title) {
 }
 
 function formatImageName(title) {
-    return title.replaceAll('|', '-').replaceAll('#', '').replaceAll(':','') + '.jpg';
+    return title.replaceAll('|', '-').replaceAll('#', '').replaceAll(':', '') + '.jpg';
 }
 
 function formatSubject(category, snippet) {
@@ -88,6 +90,7 @@ function formatSubject(category, snippet) {
 
     console.log('Unknown subject: ', category);
 
+    return '';
 }
 
 function patchNoteSubjects(date) {
@@ -135,13 +138,13 @@ function generateLink(videoId) {
 }
 
 function getVideoLink(thumbnails) {
-    if(thumbnails.maxres){
+    if (thumbnails.maxres) {
         return thumbnails.maxres.url
     }
-    if(thumbnails.standard){
+    if (thumbnails.standard) {
         return thumbnails.standard.url
     }
-    if(thumbnails.high){
+    if (thumbnails.high) {
         return thumbnails.high.url
     }
 
@@ -162,9 +165,9 @@ async function printVideoDetails(data) {
         .replaceAll('{{YT.CATEGORY}}', category)
         .replaceAll('{{YT.SUBJECT}}', formatSubject(category, data.snippet))
         .replaceAll('{{YT.PARTICIPANTS}}', getParticipants(category, data.snippet))
-        .replaceAll('{{RSWIKI.LINK}}', formatImageName(data.snippet.title).replace('.jpg', '').replaceAll(' ','_'))
+        .replaceAll('{{RSWIKI.LINK}}', formatImageName(data.snippet.title).replace('.jpg', '').replaceAll(' ', '_'))
 
-    console.log(data.snippet)
+    console.log(data)
 
     fs.writeFile('output/video/' + formatName(data.snippet.title) + '.md', output, err => {
         if (err) {
@@ -175,22 +178,21 @@ async function printVideoDetails(data) {
     //save image
 
     const stream = fs.createWriteStream('output/video/' + formatImageName(data.snippet.title));
-    const { body } =  await fetch(getVideoLink(data.snippet.thumbnails));
+    const {body} = await fetch(getVideoLink(data.snippet.thumbnails));
     await finished(Readable.fromWeb(body).pipe(stream));
 }
 
 
 // Patch notes
 /*
-getVideoDetails('uwxFKqJRMus');
-getVideoDetails('K94X0nsrUik');
-getVideoDetails('bE_PMKOcQeE');
-getVideoDetails('FFsgMAutFqo');
-getVideoDetails('RyaRDVFYses');
-getVideoDetails('RyaRDVFYses');
-getVideoDetails('pyslt2EFcPY');
-getVideoDetails('w7UrYSK3VbU');
-getVideoDetails('kcdyA0cDLt4');
+getVideoDetails('uwxFKqJRMus'); //13 may
+getVideoDetails('K94X0nsrUik'); //20 may
+getVideoDetails('bE_PMKOcQeE');// 28 may
+getVideoDetails('FFsgMAutFqo');// 3 june
+getVideoDetails('RyaRDVFYses');// 10 june
+getVideoDetails('pyslt2EFcPY');// 17 june
+getVideoDetails('w7UrYSK3VbU');// 24 june
+getVideoDetails('kcdyA0cDLt4');// 1 july
 */
 //Dev diary
-getVideoDetails('GspAnFCsEQw');
+// getVideoDetails('GspAnFCsEQw'); // Dev Diary New Archaeology Dig Site - Daemonheim - RuneScape
