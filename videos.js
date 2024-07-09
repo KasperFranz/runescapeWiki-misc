@@ -119,7 +119,7 @@ function patchNoteFromDate(date) {
         case '2024-07-01':
             return 'Update:Chill Beach Week - This Week In RuneScape'
         case '2024-07-08':
-            return ''
+            return 'Update:Vintage Beachwear Marketplace Outfit - This Week In RuneScape'
     }
 
     return 'UNKNOWN!';
@@ -194,5 +194,6 @@ getVideoDetails('pyslt2EFcPY');// 17 june
 getVideoDetails('w7UrYSK3VbU');// 24 june
 getVideoDetails('kcdyA0cDLt4');// 1 july
 */
+getVideoDetails('vPeTL2hC_h4') // 8 july
 //Dev diary
 // getVideoDetails('GspAnFCsEQw'); // Dev Diary New Archaeology Dig Site - Daemonheim - RuneScape
