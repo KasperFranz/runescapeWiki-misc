@@ -70,7 +70,11 @@ function formatCategory(title) {
         return 'Dev Diary';
     }
 
-    console.log("UNKNOWN subject!");
+    if (title.includes('Teaser')){
+        return 'trailer';
+    }
+
+    console.log("UNKNOWN category!");
     return '';
 }
 
@@ -167,7 +171,6 @@ async function printVideoDetails(data) {
         .replaceAll('{{YT.PARTICIPANTS}}', getParticipants(category, data.snippet))
         .replaceAll('{{RSWIKI.LINK}}', formatImageName(data.snippet.title).replace('.jpg', '').replaceAll(' ', '_'))
 
-    console.log(data)
 
     fs.writeFile('output/video/' + formatName(data.snippet.title) + '.md', output, err => {
         if (err) {
@@ -193,7 +196,10 @@ getVideoDetails('RyaRDVFYses');// 10 june
 getVideoDetails('pyslt2EFcPY');// 17 june
 getVideoDetails('w7UrYSK3VbU');// 24 june
 getVideoDetails('kcdyA0cDLt4');// 1 july
-*/
 getVideoDetails('vPeTL2hC_h4') // 8 july
+
+ */
 //Dev diary
 // getVideoDetails('GspAnFCsEQw'); // Dev Diary New Archaeology Dig Site - Daemonheim - RuneScape
+
+getVideoDetails('_LKmIJtDjU0')
