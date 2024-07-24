@@ -83,7 +83,7 @@ function formatName(title) {
 }
 
 function formatImageName(title) {
-    return title.replaceAll('|', '-').replaceAll('#', '').replaceAll(':', '') + '.jpg';
+    return title.replaceAll('|', '-').replaceAll('#', '') + '.jpg';
 }
 
 function formatSubject(category, snippet) {
