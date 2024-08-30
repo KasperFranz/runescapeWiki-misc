@@ -36,7 +36,17 @@ const template = `{{Needs dialogue}}
 {{DISPLAYTITLE:{{YT.CLEANTITLE}}}}
 {{Restricted title|Cannot use pipe in titles}}`;
 
+function getShortDetails(videoId){
+    return getDetails(videoId, 'short')
+}
+
+
+
 function getVideoDetails(videoId) {
+    return getDetails(videoId, 'video')
+}
+
+function getDetails(videoId, type) {
     const service = google.youtube('v3');
     service.videos.list({
         auth: process.env.GOOGLE_API_KEY,
@@ -47,7 +57,7 @@ function getVideoDetails(videoId) {
             console.error('Error: ' + err);
         }
         if (data) {
-            printVideoDetails(data.data.items[0])
+            printVideoDetails(data.data.items[0],type)
         }
     });
 }
@@ -65,8 +75,11 @@ function formatDuration(duration) {
 }
 
 
-function formatCategory(title) {
+function formatCategory(title,type) {
 
+    if(type === 'short'){
+        return 'Shorts'
+    }
     if (title.includes("Patch Notes")) {
         return 'Patch notes'
     }
@@ -155,7 +168,10 @@ function getParticipants(category, snippet) {
     return '';
 }
 
-function generateLink(videoId) {
+function generateLink(videoId,type) {
+    if(type==='short'){
+        return 'https://www.youtube.com/shorts/' + videoId
+    }
     return 'https://www.youtube.com/watch?v=' + videoId;
 }
 
@@ -172,17 +188,18 @@ function getVideoLink(thumbnails) {
 
 }
 
-async function printVideoDetails(data) {
-    const category = formatCategory(data.snippet.title)
+async function printVideoDetails(data,type) {
+    const category = formatCategory(data.snippet.title,type)
     //console.log(data)
     const imageName = formatImageName(data.snippet.title)
+    const ytLink = generateLink(data.id,type);
     const output = template
         .replaceAll('{{YT.CLEANTITLE}}', formatName(data.snippet.title))
         .replaceAll('{{YT.TITLE}}', data.snippet.title)
         .replaceAll('{{YT.IMAGE}}', imageName)
         .replaceAll('{{YT.DATE}}', formatDate(data.snippet.publishedAt))
         .replaceAll('{{YT.DURATION}}', formatDuration(data.contentDetails.duration))
-        .replaceAll('{{YT.LINK}}', generateLink(data.id))
+        .replaceAll('{{YT.LINK}}', ytLink)
         .replaceAll('{{YT.DESCRIPTION}}', data.snippet.description.replaceAll('\n', '<br>\n').replaceAll('\n#', '\n<nowiki>#</nowiki>'))
         .replaceAll('{{YT.DURATION}}', data.snippet.duration)
         .replaceAll('{{YT.CATEGORY}}', category)
@@ -201,9 +218,8 @@ async function printVideoDetails(data) {
     const {body} = await fetch(getVideoLink(data.snippet.thumbnails));
     await finished(Readable.fromWeb(body).pipe(stream));
 
-    console.log(`https://runescape.wiki/w/{{RSWIKI.LINK}}?action=edit`.replaceAll('{{RSWIKI.LINK}}', formatImageName(data.snippet.title).replace('.jpg', '').replaceAll(' ', '_')))
-    console.log(encodeURI(`https://runescape.wiki/w/Special:Upload?wpDestFile={{IMAGE}}&wpUploadDescription={{IMAGE_DESC}}`.replaceAll('{{IMAGE}}', imageName.replaceAll(' ', '_')).replaceAll('{{IMAGE_DESC}}',IMAGEDESCRIPTION).replaceAll('{{YT.LINK}}',generateLink(data.id))))
-    console.log('https://runescape.wiki/w/Special:Upload?a=RuneScape_Patch_Notes_S2E16_-_26th_August_2024.jpg&summary=test')
+    console.log(encodeURI(`https://runescape.wiki/w/{{RSWIKI.LINK}}?action=edit`.replaceAll('{{RSWIKI.LINK}}', formatImageName(data.snippet.title).replace('.jpg', '').replaceAll(' ', '_'))))
+    console.log(encodeURI(`https://runescape.wiki/w/Special:Upload?wpDestFile={{IMAGE}}&wpUploadDescription={{IMAGE_DESC}}`.replaceAll('{{IMAGE}}', imageName.replaceAll(' ', '_')).replaceAll('{{IMAGE_DESC}}',IMAGEDESCRIPTION).replaceAll('{{YT.LINK}}',ytLink)))
 }
 
 
@@ -230,4 +246,7 @@ getVideoDetails('vPeTL2hC_h4') // 8 july
 //getVideoDetails('EKhwXwlJ7w8')
 //getVideoDetails('2Dd-_lhcXxk')
 //getVideoDetails('mnBsUtu3DQs')
-getVideoDetails('HkDM3so45P8')
+//getShortDetails('xyuDRa1ivoM','shorts')
+//getShortDetails('t6URqbdIdUk','shorts')
+//getShortDetails('klJbBL5_x0Y','shorts')
+//getShortDetails('Iy5DHKJ1CPc','shorts')
