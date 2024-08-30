@@ -7,24 +7,26 @@ const sceneryName = 'Operating table'
 
 
 const locations = [
-    {name: '[[Senntisten]]', minX: 1537, maxX: 2100, minY: 1150, maxY: 1360, mapId: '-1'},
-    {name: '[[The Zamorakian Undercity]]', minX: 1600, maxX: 1790, minY: 1500, maxY: 1790, mapId: 740},
-    {name: '[[Senntisten Asylum]]', minX: 1930, maxX: 2038, minY: 1420, maxY: 1530, mapId: 738},
-    {name: '[[Daemonheim]]', minX: 3374, maxX: 3525, minY: 3607, maxY: 3796, mapId: '-1'},
-    {name: '[[Freneskae]]', minX: 2560, maxX: 2816, minY: 12287, maxY: 12607, mapId: '-1'},
-    {name: '[[Freneskae#The_Ritual_Site|Freneskae Ritual Site]]', minX: 2428, maxX: 2561, minY: 12350, maxY: 12547, mapId: '-1'},
-    {name: '[[Mort Myre Swamp]]', minX: 3398, maxX: 3646, minY: 3252, maxY: 3528, mapId: '-1'},
-    {name: '[[The beach]]', minX: 3140, maxX: 3193, minY: 3203, maxY: 3260, mapId: '-1'},
-    {name: '[[Al Kharid]]', minX: 3266, maxX: 3334, minY: 3133, maxY: 3221, mapId: '-1'},
+    {name: '[[Senntisten]]', west: 1537, east: 2100, north: 1360, south: 1150, mapId: '-1'},
+    {name: '[[The Zamorakian Undercity]]', west: 1600, east: 1790, north: 1790, south: 1500, mapId: 740},
+    {name: '[[Senntisten Asylum]]', west: 1930, east: 2038, north: 1530, south: 1420, mapId: 738},
+    {name: '[[Daemonheim]]', west: 3374, east: 3525, north: 3796, south: 3607, mapId: '-1'},
+    {name: '[[Freneskae]]', west: 2560, east: 2816, north: 12607, south: 12287, mapId: '-1'},
+    {name: '[[Freneskae#The_Ritual_Site|Freneskae Ritual Site]]', west: 2428, east: 2561, north: 12547, south: 12350, mapId: '-1'},
+    {name: '[[Mort Myre Swamp]]', west: 3398, east: 3646, north: 3528, south: 3252, mapId: '-1'},
+    {name: '[[The beach]]', west: 3140, east: 3193, north: 3260, south: 3203, mapId: '-1'},
+    {name: '[[Al Kharid]]', west: 3266, east: 3334, north: 3221, south: 3133, mapId: '-1'},
+    {name: '[[Fort Forinthry]]', west: 3273, east: 3337, north: 3578, south: 3530, mapId: '-1'},
 
 ];
 
 const ignoredLocations =
     [
-        {name: 'Senntisten instance 1', minX: 1595, maxX: 2049, minY: 1791, maxY: 2054, mapId: '-1'},
-        {name: 'Senntisten instance 2', minX: 514, maxX: 900, minY: 129, maxY: 529, mapId: '-1'},
-        {name: 'Mort Myre Swamp instance', minX: 1984, maxX: 2050, minY: 4990, maxY: 5056, mapId: '-1'},
-        {name: 'Mort Myre Swamp instance', minX: 3778, maxX: 3969, minY: 7550, maxY: 7746, mapId: '-1'},
+        {name: 'Senntisten instance 1', west: 1595, east: 2049, north: 2054, south: 1791, mapId: '-1'},
+        {name: 'Senntisten instance 2', west: 514, east: 900, north: 529, south: 129, mapId: '-1'},
+        {name: 'Mort Myre Swamp instance', west: 1984, east: 2050, north: 5056, south: 4990, mapId: '-1'},
+        {name: 'Mort Myre Swamp instance', west: 3778, east: 3969, north: 7746, south: 7550, mapId: '-1'},
+        {name: 'Fort Forinthry instance', west: 1280, east: 1344, north: 1536, south: 1472, mapId: '-1'},
     ];
 const template = `{{ObjectLocLine
 |name = {{NAME}}
@@ -87,7 +89,7 @@ async function getData(id) {
     let localData = null;
     try {
         localData = await getLocalData(id);
-    }catch(e) {
+    } catch (e) {
         localData = await getRemoteData(id)
     }
     return localData.filter(checkUnwantedLocations);
@@ -122,7 +124,7 @@ async function getIDsAndCoords(ids) {
         let dataY = (item.j * 64 + item.y);
         let dataX = (item.i * 64 + item.x);
         for (let location of locations) {
-            if (dataX > location.minX && dataX < location.maxX && dataY > location.minY && dataY < location.maxY) {
+            if (dataX > location.west && dataX < location.east && dataY > location.south && dataY < location.north) {
                 const named = location.name + ':::::' + location.mapId
                 if (!Object.hasOwn(tempData, named)) {
                     tempData[named] = {};
@@ -178,7 +180,7 @@ function checkUnwantedLocations(item) {
     let dataY = (item.j * 64 + item.y);
     let dataX = (item.i * 64 + item.x)
     for (let ignoreLocation of ignoredLocations) {
-        if (dataX > ignoreLocation.minX && dataX < ignoreLocation.maxX && dataY > ignoreLocation.minY && dataY < ignoreLocation.maxY) {
+        if (dataX > ignoreLocation.west && dataX < ignoreLocation.east && dataY > ignoreLocation.south && dataY < ignoreLocation.north) {
             return false;
         }
     }
@@ -187,6 +189,6 @@ function checkUnwantedLocations(item) {
     // console.log(object)
 }
 
-function compareItems(a,b){
-    return a.plane-b.plane;
+function compareItems(a, b) {
+    return a.plane - b.plane;
 }
