@@ -7,8 +7,13 @@ const {finished} = require('stream/promises');
 
 require('dotenv').config()
 
+const IMAGEDESCRIPTION = `== Summary ==
+{{Fair use|link={{YT.LINK}}}}
+
+[[Category:Media thumbnails]]
+`
 // noinspection UnnecessaryLabelJS JSAnnotator
-const template = `https://runescape.wiki/w/{{RSWIKI.LINK}}
+const template = `{{Needs dialogue}}
 {{Infobox Media
 |name = {{YT.CLEANTITLE}}
 |image = {{YT.IMAGE}}
@@ -70,7 +75,7 @@ function formatCategory(title) {
         return 'Dev Diary';
     }
 
-    if (title.includes('Teaser')){
+    if (title.includes('Teaser')) {
         return 'trailer';
     }
 
@@ -83,7 +88,7 @@ function formatName(title) {
 }
 
 function formatImageName(title) {
-    return title.replaceAll('|', '-').replaceAll('#', '') + '.jpg';
+    return title.replaceAll('|', '-').replaceAll('#', '').replaceAll(':', '-') + '.jpg';
 }
 
 function formatSubject(category, snippet) {
@@ -124,8 +129,21 @@ function patchNoteFromDate(date) {
             return 'Update:Chill Beach Week - This Week In RuneScape'
         case '2024-07-08':
             return 'Update:Vintage Beachwear Marketplace Outfit - This Week In RuneScape'
+        case '2024-07-29':
+        case '2024-07-30':
+            return 'Update:Summer Double XP - This Week In RuneScape'
+        case '2024-08-05':
+            return 'Update:Summer Sanctum Patch Week - This Week In RuneScape'
+        case '2024-08-12':
+            return 'Update:Mining & Smithing 110 Launching Today! - This Week In RuneScape'
+        case '2024-08-19':
+            return 'Update:110 Mining & Smithing Post-Launch - This Week In RuneScape'
+        case '2024-08-29':
+            return 'Update:August Patch Week - This Week In RuneScape'
     }
 
+    console.error('Uknown update')
+    console.error('https://runescape.wiki/w/2024')
     return 'UNKNOWN!';
 }
 
@@ -157,10 +175,11 @@ function getVideoLink(thumbnails) {
 async function printVideoDetails(data) {
     const category = formatCategory(data.snippet.title)
     //console.log(data)
+    const imageName = formatImageName(data.snippet.title)
     const output = template
         .replaceAll('{{YT.CLEANTITLE}}', formatName(data.snippet.title))
         .replaceAll('{{YT.TITLE}}', data.snippet.title)
-        .replaceAll('{{YT.IMAGE}}', formatImageName(data.snippet.title))
+        .replaceAll('{{YT.IMAGE}}', imageName)
         .replaceAll('{{YT.DATE}}', formatDate(data.snippet.publishedAt))
         .replaceAll('{{YT.DURATION}}', formatDuration(data.contentDetails.duration))
         .replaceAll('{{YT.LINK}}', generateLink(data.id))
@@ -168,9 +187,7 @@ async function printVideoDetails(data) {
         .replaceAll('{{YT.DURATION}}', data.snippet.duration)
         .replaceAll('{{YT.CATEGORY}}', category)
         .replaceAll('{{YT.SUBJECT}}', formatSubject(category, data.snippet))
-        .replaceAll('{{YT.PARTICIPANTS}}', getParticipants(category, data.snippet))
-        .replaceAll('{{RSWIKI.LINK}}', formatImageName(data.snippet.title).replace('.jpg', '').replaceAll(' ', '_'))
-
+        .replaceAll('{{YT.PARTICIPANTS}}', getParticipants(category, data.snippet));
 
     fs.writeFile('output/video/' + formatName(data.snippet.title) + '.md', output, err => {
         if (err) {
@@ -180,9 +197,13 @@ async function printVideoDetails(data) {
 
     //save image
 
-    const stream = fs.createWriteStream('output/video/' + formatImageName(data.snippet.title));
+    const stream = fs.createWriteStream('output/video/' + imageName);
     const {body} = await fetch(getVideoLink(data.snippet.thumbnails));
     await finished(Readable.fromWeb(body).pipe(stream));
+
+    console.log(`https://runescape.wiki/w/{{RSWIKI.LINK}}?action=edit`.replaceAll('{{RSWIKI.LINK}}', formatImageName(data.snippet.title).replace('.jpg', '').replaceAll(' ', '_')))
+    console.log(encodeURI(`https://runescape.wiki/w/Special:Upload?wpDestFile={{IMAGE}}&wpUploadDescription={{IMAGE_DESC}}`.replaceAll('{{IMAGE}}', imageName.replaceAll(' ', '_')).replaceAll('{{IMAGE_DESC}}',IMAGEDESCRIPTION).replaceAll('{{YT.LINK}}',generateLink(data.id))))
+    console.log('https://runescape.wiki/w/Special:Upload?a=RuneScape_Patch_Notes_S2E16_-_26th_August_2024.jpg&summary=test')
 }
 
 
@@ -202,4 +223,11 @@ getVideoDetails('vPeTL2hC_h4') // 8 july
 //Dev diary
 // getVideoDetails('GspAnFCsEQw'); // Dev Diary New Archaeology Dig Site - Daemonheim - RuneScape
 
-getVideoDetails('_LKmIJtDjU0')
+// getVideoDetails('_LKmIJtDjU0')
+// getVideoDetails('rn_9yv2odHU')
+
+// getVideoDetails('ZbsTNJHyMMg')
+//getVideoDetails('EKhwXwlJ7w8')
+//getVideoDetails('2Dd-_lhcXxk')
+//getVideoDetails('mnBsUtu3DQs')
+getVideoDetails('HkDM3so45P8')
