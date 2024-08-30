@@ -36,6 +36,8 @@ const template = `{{ObjectLocLine
 |mapID = {{MAPID}}{{PLANE}}
 }}`;
 
+const template2 = `|map = {{Object map|objectname={{NAME}}|{{LOCATIONS}}}}`
+
 getIDsAndCoords(ids)
     .then(output => {
         if (output.length === 0) {
@@ -124,7 +126,7 @@ async function getIDsAndCoords(ids) {
         let dataY = (item.j * 64 + item.y);
         let dataX = (item.i * 64 + item.x);
         for (let location of locations) {
-            if (dataX > location.west && dataX < location.east && dataY > location.south && dataY < location.north) {
+            if (dataX >= location.west && dataX <= location.east && dataY >= location.south && dataY <= location.north) {
                 const named = location.name + ':::::' + location.mapId
                 if (!Object.hasOwn(tempData, named)) {
                     tempData[named] = {};
@@ -160,12 +162,20 @@ async function getIDsAndCoords(ids) {
             const floorString = multiplePlanes ? " ({{FloorNumber|" + ((+plane) + 1) + "}})" : ''
             const planeString = plane > 0 ? "\n|plane=" + plane : ''
             results.push(
-                template.replace('{{LOCATIONS}}', formatData(locationData).toString().replaceAll(",|", "|"))
-                    .replace('{{LOCATION}}', locationName)
-                    .replace('{{MAPID}}', mapId)
-                    .replace('{{FLOOR}}', floorString)
-                    .replace('{{NAME}}', sceneryName)
-                    .replace('{{PLANE}}', planeString)
+                template.replaceAll('{{LOCATIONS}}', formatData(locationData).toString().replaceAll(",|", "|"))
+                    .replaceAll('{{LOCATION}}', locationName)
+                    .replaceAll('{{MAPID}}', mapId)
+                    .replaceAll('{{FLOOR}}', floorString)
+                    .replaceAll('{{NAME}}', sceneryName)
+                    .replaceAll('{{PLANE}}', planeString)
+            )
+            results.push(
+                template2.replaceAll('{{LOCATIONS}}', formatData(locationData).toString().replaceAll(",|", "|"))
+                    .replaceAll('{{LOCATION}}', locationName)
+                    .replaceAll('{{MAPID}}', mapId)
+                    .replaceAll('{{FLOOR}}', floorString)
+                    .replaceAll('{{NAME}}', sceneryName)
+                    .replaceAll('{{PLANE}}', planeString)
             )
         }
     }
