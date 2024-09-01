@@ -115,7 +115,7 @@ async function getLocationConfigLocal(id) {
 }
 
 async function getData(id) {
-    let localData = null;
+    let localData;
     try {
         localData = await getLocalData(id);
     } catch (e) {
@@ -186,7 +186,6 @@ async function getIDsAndCoords(ids) {
     }
 
     for (const [key, data] of Object.entries(tempData)) {
-        const multiplePlanes = Object.entries(data).length > 1;
         let [locationName, mapId] = key.split(':::::');
 
         for (const [plane, locationData] of Object.entries(data)) {
