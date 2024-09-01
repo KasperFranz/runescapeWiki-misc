@@ -1,9 +1,10 @@
 const fs = require('node:fs');
 
+const localDataLocation = '../rs3cache/output'
 
 // Example usage
 const ids = [121036, 121037];
-const useTemplate2 = true;
+const useTemplate2 = false;
 
 
 let sceneryName = 'NOT_FOUND'
@@ -104,12 +105,12 @@ async function getRemoteData(id) {
 }
 
 async function getLocalData(id) {
-    const path = `../DATA_RS3/locations/${id}.json`
+    const path = `${localDataLocation}/locations/${id}.json`
     return JSON.parse(fs.readFileSync(path, 'utf8'));
 }
 
 async function getLocationConfigLocal(id) {
-    const path = `../DATA_RS3/location_configs/${id}.json`
+    const path = `${localDataLocation}/location_configs/${id}.json`
     return JSON.parse(fs.readFileSync(path, 'utf8'));
 }
 
