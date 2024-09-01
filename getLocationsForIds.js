@@ -3,7 +3,7 @@ const fs = require('node:fs');
 const localDataLocation = '../rs3cache/output'
 
 // Example usage
-const ids = [121036, 121037];
+    const ids = [130744];
 const useTemplate2 = false;
 
 
@@ -29,10 +29,19 @@ const locations = [
     {name: '[[Robert the Strong\'s library]]', west: 2199, east: 2223, north: 5934, south: 5910, mapId: '-1'},
     {name: '[[Camdozaal]]', west: 3021, east: 3056, north: 9910, south: 9868, mapId: '-1'},
     {name: '[[Het\'s Oasis]]', west: 3324, east: 3409, north: 3266, south: 3203, mapId: '-1'},
-    {name: '[[City of Um]]', west: 896, east: 1279, north: 1985, south: 1600, mapId: '742'},
     {name: '[[Lighthouse]]', west: 2484, east: 2528, north: 3660, south: 3617, mapId: '-1'},
+    {name: '[[Moksha ritual site]]', west: 1088, east: 1152, north: 256, south: 192, mapId: '-1'},
+    {name: '[[Daemonheim - Depths excavation site]]', west: 2176, east: 2240, north: 9280, south: 9216, mapId: '-1'},
+    {name: '[[Kerapac\'s laboratory]]', west: 5288, east: 5434, north: 2907, south: 2739, mapId: '-1'},
+    {name: '[[Warforge Dig Site]]', west: 2240, east: 2368, north: 7424, south: 7296, mapId: '729'},
+    {name: '[[Warforge Dig Site]]', west: 2368, east: 2432, north: 7360, south: 7296, mapId: '730'},
+    {name: '[[City of Um]]', west: 896, east: 1279, north: 1985, south: 1600, mapId: '742'},
+    {name: '[[Rex Matriarch lair]]', west: 3968, east: 4096, north: 9856, south: 9728, mapId: '749'},
+    {name: '[[Rex Matriarch lair]]', west: 3840, east: 3968, north: 9920, south: 9793, mapId: '750'},
+    {name: '[[Anachronia]]', west: 5248, east: 5760, north: 2626, south: 2047, mapId: '-1'},
     {name: '[[]]', west: 0, east: 0, north: 0, south: 0, mapId: '-1'},
-
+    {name: '[[]]', west: 0, east: 0, north: 0, south: 0, mapId: '-1'},
+    {name: '[[]]', west: 0, east: 0, north: 0, south: 0, mapId: '-1'},
 
 ];
 
@@ -57,7 +66,7 @@ const template = `{{ObjectLocLine
 |mapID = {{MAPID}}{{PLANE}}
 }}`;
 
-const template2 = `|map = {{Object map|mapID={{MAPID}}|objectId={{OBJECTID}}{{LOCATIONS}}}}`
+const template2 = `|map = {{Object map|mapID={{MAPID}}{{PLANE}}|objectId={{OBJECTID}}{{LOCATIONS}}}}`
 
 getIDsAndCoords(ids)
     .then(output => {
