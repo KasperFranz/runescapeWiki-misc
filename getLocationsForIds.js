@@ -36,20 +36,19 @@ const locations = [
 
 ];
 
-const ignoredLocations =
-    [
-        {name: 'Senntisten instance (Twilight of the gods)', west: 1595, east: 2049, north: 2054, south: 1791, mapId: '-1'},
-        {name: 'Senntisten instance (City of Senntisten)', west: 514, east: 900, north: 529, south: 129, mapId: '-1'},
-        {name: 'Mort Myre Swamp instance', west: 1984, east: 2050, north: 5056, south: 4990, mapId: '-1'},
-        {name: 'Mort Myre Swamp instance', west: 3778, east: 3969, north: 7746, south: 7550, mapId: '-1'},
-        {name: 'Fort Forinthry instance', west: 1280, east: 1344, north: 1536, south: 1472, mapId: '-1'},
-        {name: 'Fort Forinthry instance 2', west: 1152, east: 1408, north: 2240 , south: 2111, mapId: '-1'},
-        {name: 'Wizards tower instance', west: 1153, east: 1216, north: 4864, south: 4800, mapId: '-1'},
-        {name: 'South Falador instance', west: 2612, east: 2861, north: 6470, south: 6323, mapId: '-1'},
-        {name: 'South Falador instance', west: 3496, east: 3585, north: 7107, south: 7039, mapId: '-1'},
-        {name: 'South Falador instance', west: 3496, east: 3585, north: 7107, south: 7039, mapId: '-1'},
-        {name: 'lighthouse copy', west: 2415, east: 2496, north: 4634, south: 4544, mapId: '-1'},
-    ];
+const ignoredLocations = [
+    {name: 'Senntisten instance (Twilight of the gods)', west: 1595, east: 2049, north: 2054, south: 1791, mapId: '-1'},
+    {name: 'Senntisten instance (City of Senntisten)', west: 514, east: 900, north: 529, south: 129, mapId: '-1'},
+    {name: 'Mort Myre Swamp instance', west: 1984, east: 2050, north: 5056, south: 4990, mapId: '-1'},
+    {name: 'Mort Myre Swamp instance', west: 3778, east: 3969, north: 7746, south: 7550, mapId: '-1'},
+    {name: 'Fort Forinthry instance', west: 1280, east: 1344, north: 1536, south: 1472, mapId: '-1'},
+    {name: 'Fort Forinthry instance 2', west: 1152, east: 1408, north: 2240, south: 2111, mapId: '-1'},
+    {name: 'Wizards tower instance', west: 1153, east: 1216, north: 4864, south: 4800, mapId: '-1'},
+    {name: 'South Falador instance', west: 2612, east: 2861, north: 6470, south: 6323, mapId: '-1'},
+    {name: 'South Falador instance', west: 3496, east: 3585, north: 7107, south: 7039, mapId: '-1'},
+    {name: 'South Falador instance', west: 3496, east: 3585, north: 7107, south: 7039, mapId: '-1'},
+    {name: 'lighthouse copy', west: 2415, east: 2496, north: 4634, south: 4544, mapId: '-1'},
+];
 const template = `{{ObjectLocLine
 |name = {{NAME}}
 |loc = {{LOCATION}}{{FLOOR}}
@@ -123,7 +122,7 @@ async function getData(id) {
     }
 
     const nameData1 = await getLocationConfigLocal(id)
-    if(Object.hasOwn(nameData1, 'name')){
+    if (Object.hasOwn(nameData1, 'name')) {
         sceneryName = nameData1['name']
     }
     return localData.filter(checkUnwantedLocations);
