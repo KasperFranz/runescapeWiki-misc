@@ -101,7 +101,7 @@ function formatName(title) {
 }
 
 function formatImageName(title) {
-    return title.replaceAll('|', '-').replaceAll('#', '').replaceAll(':', '-') + '.jpg';
+    return title.replaceAll('|', '-').replaceAll('#', '').replaceAll(':', '-').replaceAll('!','').replaceAll('&','').replaceAll('  ',' ') + '.jpg';
 }
 
 function formatSubject(category, snippet) {
@@ -153,6 +153,8 @@ function patchNoteFromDate(date) {
             return 'Update:110 Mining & Smithing Post-Launch - This Week In RuneScape'
         case '2024-08-29':
             return 'Update:August Patch Week - This Week In RuneScape'
+        case '2024-09-02':
+            return 'Update:New Necromancy Conjure - This Week In RuneScape'
     }
 
     console.error('Uknown update')
@@ -249,4 +251,6 @@ getVideoDetails('vPeTL2hC_h4') // 8 july
 //getShortDetails('xyuDRa1ivoM','shorts')
 //getShortDetails('t6URqbdIdUk','shorts')
 //getShortDetails('klJbBL5_x0Y','shorts')
-//getShortDetails('Iy5DHKJ1CPc','shorts')
+getShortDetails('14fWgLBN6No')
+
+// getVideoDetails('dbANyqb1DLI')
