@@ -3,7 +3,7 @@ const fs = require('node:fs');
 const localDataLocation = '../rs3cache/output'
 
 // Example usage
-    const ids = [130744];
+    const ids = [1109001, 109003, 109005, 109007];
 const useTemplate2 = false;
 
 
@@ -14,22 +14,22 @@ const locations = [
     {name: '[[Senntisten]]', west: 1535, east: 2112, north: 1417, south: 1088, mapId: '-1'},
     {name: '[[The Zamorakian Undercity]]', west: 1600, east: 1790, north: 1790, south: 1500, mapId: 740},
     {name: '[[Senntisten Asylum]]', west: 1930, east: 2038, north: 1530, south: 1420, mapId: 738},
-    {name: '[[Daemonheim]]', west: 3374, east: 3525, north: 3796, south: 3607, mapId: '-1'},
+    {name: '[[Daemonheim]]', west: 3374, east: 3525, north: 3796, south: 3607, mapId: '28'},
     {name: '[[Freneskae]]', west: 2560, east: 2816, north: 12607, south: 12287, mapId: '-1'},
     {name: '[[Freneskae#The_Ritual_Site|Freneskae Ritual Site]]', west: 2428, east: 2561, north: 12547, south: 12350, mapId: '-1'},
-    {name: '[[Mort Myre Swamp]]', west: 3398, east: 3646, north: 3528, south: 3252, mapId: '-1'},
-    {name: '[[The beach]]', west: 3140, east: 3193, north: 3260, south: 3203, mapId: '-1'},
-    {name: '[[Al Kharid]]', west: 3266, east: 3334, north: 3221, south: 3133, mapId: '-1'},
-    {name: '[[Fort Forinthry]]', west: 3273, east: 3337, north: 3578, south: 3530, mapId: '-1'},
-    {name: '[[Wizards\' Tower]]', west: 3065, east: 3136, north: 3196, south: 3123, mapId: '-1'},
-    {name: '[[Armadyl\'s Tower]]', west: 2980, east: 3000, north: 3276, south: 3254, mapId: '-1'},
-    {name: '[[Void Knights\' Outpost]]', west: 2595, east: 2711, north: 2689, south: 2532, mapId: '-1'},
+    {name: '[[Mort Myre Swamp]]', west: 3398, east: 3646, north: 3528, south: 3252, mapId: '28'},
+    {name: '[[The beach]]', west: 3140, east: 3193, north: 3260, south: 3203, mapId: '28'},
+    {name: '[[Het\'s Oasis]]', west: 3324, east: 3409, north: 3269, south: 3203, mapId: '28'},
+    {name: '[[Al Kharid]]', west: 3266, east: 3334, north: 3269, south: 3133, mapId: '28'},
+    {name: '[[Fort Forinthry]]', west: 3273, east: 3337, north: 3578, south: 3530, mapId: '-28'},
+    {name: '[[Wizards\' Tower]]', west: 3065, east: 3136, north: 3196, south: 3123, mapId: '28'},
+    {name: '[[Armadyl\'s Tower]]', west: 2980, east: 3000, north: 3276, south: 3254, mapId: '28'},
+    {name: '[[Void Knights\' Outpost]]', west: 2595, east: 2711, north: 2689, south: 2532, mapId: '28'},
     {name: '[[Slayer Tower]]', west: 3396, east: 3451, north: 3579, south: 3537, mapId: '-1'},
     {name: '[[Gulvas Mansion]]', west: 2937, east: 3010, north: 6275, south: 6211, mapId: '-1'},
     {name: '[[Robert the Strong\'s library]]', west: 2199, east: 2223, north: 5934, south: 5910, mapId: '-1'},
     {name: '[[Camdozaal]]', west: 3021, east: 3056, north: 9910, south: 9868, mapId: '-1'},
-    {name: '[[Het\'s Oasis]]', west: 3324, east: 3409, north: 3266, south: 3203, mapId: '-1'},
-    {name: '[[Lighthouse]]', west: 2484, east: 2528, north: 3660, south: 3617, mapId: '-1'},
+    {name: '[[Lighthouse]]', west: 2484, east: 2528, north: 3660, south: 3617, mapId: '28'},
     {name: '[[Moksha ritual site]]', west: 1088, east: 1152, north: 256, south: 192, mapId: '-1'},
     {name: '[[Daemonheim - Depths excavation site]]', west: 2176, east: 2240, north: 9280, south: 9216, mapId: '-1'},
     {name: '[[Kerapac\'s laboratory]]', west: 5288, east: 5434, north: 2907, south: 2739, mapId: '-1'},
@@ -38,9 +38,9 @@ const locations = [
     {name: '[[City of Um]]', west: 896, east: 1279, north: 1985, south: 1600, mapId: '742'},
     {name: '[[Rex Matriarch lair]]', west: 3968, east: 4096, north: 9856, south: 9728, mapId: '749'},
     {name: '[[Rex Matriarch lair]]', west: 3840, east: 3968, north: 9920, south: 9793, mapId: '750'},
-    {name: '[[Anachronia]]', west: 5248, east: 5760, north: 2626, south: 2047, mapId: '-1'},
-    {name: '[[]]', west: 0, east: 0, north: 0, south: 0, mapId: '-1'},
-    {name: '[[]]', west: 0, east: 0, north: 0, south: 0, mapId: '-1'},
+    {name: '[[Anachronia]]', west: 5248, east: 5760, north: 2626, south: 2047, mapId: '28'},
+    {name: '[[Sophanem]]', west: 3266, east: 3323, north: 2807, south: 2631, mapId: '28'},
+    {name: '[[Kharidian Desert]]', west: 3023, east: 3527, north: 3125, south: 2541, mapId: '28'},
     {name: '[[]]', west: 0, east: 0, north: 0, south: 0, mapId: '-1'},
 
 ];
@@ -166,6 +166,9 @@ async function getIDsAndCoords(ids) {
         let dataY = (item.j * 64 + item.y);
         let dataX = (item.i * 64 + item.x);
         for (let location of locations) {
+            if(found >0){
+                continue;
+            }
             if (dataX >= location.west && dataX <= location.east && dataY >= location.south && dataY <= location.north) {
                 const named = location.name + ':::::' + location.mapId
                 if (!Object.hasOwn(tempData, named)) {
