@@ -88,7 +88,7 @@ function formatCategory(title,type) {
         return 'Dev Diary';
     }
 
-    if (title.includes('Teaser')) {
+    if (title.includes('Teaser') || title.includes('Trailer')) {
         return 'trailer';
     }
 
@@ -117,7 +117,7 @@ function formatSubject(category, snippet) {
 
 function patchNoteSubjects(date) {
     const update = patchNoteFromDate(date);
-    return '[[' + update + '|' + update.replace('Update:', '') + ']]'
+    return '[[' + update + '|' + update.replace(new RegExp('Update:', "ig"), '') + ']]'
 
 }
 
@@ -155,6 +155,16 @@ function patchNoteFromDate(date) {
             return 'Update:August Patch Week - This Week In RuneScape'
         case '2024-09-02':
             return 'Update:New Necromancy Conjure - This Week In RuneScape'
+        case '2024-09-09':
+            return 'update:September Merch Drop - This Week In RuneScape'
+        case '2024-09-16':
+            return 'update:Ode of the Devourer Quest Launch - This Week In RuneScape'
+        case '2024-09-23': 
+            return 'update:Gate of Elidinis Launch Week - This Week In RuneScape'
+        case '2024-09-30': 
+        return 'Update:Gate of Elidinis Patch Week - This Week In RuneScape'
+        case '2024-10-07': 
+        return 'Update:October Patch Week - This Week In RuneScape'
     }
 
     console.error('Uknown update')
@@ -251,6 +261,18 @@ getVideoDetails('vPeTL2hC_h4') // 8 july
 //getShortDetails('xyuDRa1ivoM','shorts')
 //getShortDetails('t6URqbdIdUk','shorts')
 //getShortDetails('klJbBL5_x0Y','shorts')
-getShortDetails('14fWgLBN6No')
+//getShortDetails('plUEc9TZNvo')
 
-// getVideoDetails('dbANyqb1DLI')
+//getVideoDetails('dbANyqb1DLI')
+//getVideoDetails('ZrUP7th55gI')
+//getVideoDetails('MXuAOazpsDo')
+//getVideoDetails('y8qVYeeRHKk')
+//getVideoDetails('ZGKu84HOic4')
+
+// getVideoDetails('TEQTzCzX1lk')
+
+// getVideoDetails('1Gq2QUp03NY')
+
+getVideoDetails('Zj4LnkW5veo')
+getShortDetails('wq5hoyRN9gI')
+getShortDetails('sDnVnFdTe0A')

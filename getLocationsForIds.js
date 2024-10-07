@@ -3,8 +3,8 @@ const fs = require('node:fs');
 const localDataLocation = '../rs3cache/output'
 
 // Example usage
-    const ids = [1109001, 109003, 109005, 109007];
-const useTemplate2 = false;
+    const ids = [125119];
+const useTemplate2 = true;
 
 
 let sceneryName = 'NOT_FOUND'
@@ -32,6 +32,7 @@ const locations = [
     {name: '[[Lighthouse]]', west: 2484, east: 2528, north: 3660, south: 3617, mapId: '28'},
     {name: '[[Moksha ritual site]]', west: 1088, east: 1152, north: 256, south: 192, mapId: '-1'},
     {name: '[[Daemonheim - Depths excavation site]]', west: 2176, east: 2240, north: 9280, south: 9216, mapId: '-1'},
+    {name: '[[Orthen - Observation outpost excavation site]]', west: 1216, east: 1280, north: 128, south: 64, mapId: '-1'},
     {name: '[[Kerapac\'s laboratory]]', west: 5288, east: 5434, north: 2907, south: 2739, mapId: '-1'},
     {name: '[[Warforge Dig Site]]', west: 2240, east: 2368, north: 7424, south: 7296, mapId: '729'},
     {name: '[[Warforge Dig Site]]', west: 2368, east: 2432, north: 7360, south: 7296, mapId: '730'},
@@ -41,6 +42,11 @@ const locations = [
     {name: '[[Anachronia]]', west: 5248, east: 5760, north: 2626, south: 2047, mapId: '28'},
     {name: '[[Sophanem]]', west: 3266, east: 3323, north: 2807, south: 2631, mapId: '28'},
     {name: '[[Kharidian Desert]]', west: 3023, east: 3527, north: 3125, south: 2541, mapId: '28'},
+    {name: '[[Prison (Fort Forinthry)]]', west: 1920, east: 1984, north: 1727, south: 1664, mapId: '-1'},
+    {name: '[[Dream World]]', west: 1728, east: 1792, north: 5120, south: 5056, mapId: '-1'},
+    {name: '[[Dream World]] (fighting with [[me]])', west: 1792, east: 1856, north: 5120, south: 5056, mapId: '-1'},
+    {name: '[[Troll Stronghold (area)|Troll Stronghold]]', west: 2816, east: 2880, north: 10112, south: 10048, mapId: '-1'},
+    {name: '[[Guthixian ruins]]', west: 1780, east: 1918, north: 6076, south: 6021, mapId: '-1'},
     {name: '[[]]', west: 0, east: 0, north: 0, south: 0, mapId: '-1'},
 
 ];
@@ -57,6 +63,8 @@ const ignoredLocations = [
     {name: 'South Falador instance', west: 3496, east: 3585, north: 7107, south: 7039, mapId: '-1'},
     {name: 'South Falador instance', west: 3496, east: 3585, north: 7107, south: 7039, mapId: '-1'},
     {name: 'lighthouse copy', west: 2415, east: 2496, north: 4634, south: 4544, mapId: '-1'},
+    {name: '[[Guthixian ruins]]', west: 1719, east: 1780, north: 6076, south: 5970, mapId: '-1'},
+    {name: '[[Guthixian ruins]]', west: 1980, east: 2045, north: 6076, south: 6017, mapId: '-1'},
 ];
 const template = `{{ObjectLocLine
 |name = {{NAME}}
@@ -66,7 +74,7 @@ const template = `{{ObjectLocLine
 |mapID = {{MAPID}}{{PLANE}}
 }}`;
 
-const template2 = `|map = {{Object map|mapID={{MAPID}}{{PLANE}}|objectId={{OBJECTID}}{{LOCATIONS}}}}`
+const template2 = `|map = {{Object map|mapID={{MAPID}}{{PLANE}}|objectid={{OBJECTID}}{{LOCATIONS}}}}`
 
 getIDsAndCoords(ids)
     .then(output => {
@@ -170,6 +178,12 @@ async function getIDsAndCoords(ids) {
                 continue;
             }
             if (dataX >= location.west && dataX <= location.east && dataY >= location.south && dataY <= location.north) {
+                if(location.name === '[[Anachronia]]'){
+                    //Coordinates for Anachronia are offset by (-23*64,31*64).
+   
+                    item.j = item.j+31
+                    item.i = item.i-23
+                }
                 const named = location.name + ':::::' + location.mapId
                 if (!Object.hasOwn(tempData, named)) {
                     tempData[named] = {};
