@@ -3,9 +3,9 @@ const fs = require('node:fs');
 const localDataLocation = '../rs3cache/output'
 
 // Example usage
-    const ids = [125119];
-const useTemplate2 = true;
-
+    const ids = [118772, 118775, 118778, 118781];
+const useTemplate2 = false;
+const member = false;
 
 let sceneryName = 'NOT_FOUND'
 
@@ -47,6 +47,9 @@ const locations = [
     {name: '[[Dream World]] (fighting with [[me]])', west: 1792, east: 1856, north: 5120, south: 5056, mapId: '-1'},
     {name: '[[Troll Stronghold (area)|Troll Stronghold]]', west: 2816, east: 2880, north: 10112, south: 10048, mapId: '-1'},
     {name: '[[Guthixian ruins]]', west: 1780, east: 1918, north: 6076, south: 6021, mapId: '-1'},
+    {name: '[[Blooming Burrow]]', west: 3712, east: 3904, north: 5056, south: 4864, mapId: '747'},
+    {name: '[[Harvest Hollow]]', west: 465, east: 831, north: 1850, south: 1600, mapId: '752',},
+    {name: '[[Burthorpe]]', west: 2868, east: 2945, north: 3574, south: 3500, mapId: '-1'},
     {name: '[[]]', west: 0, east: 0, north: 0, south: 0, mapId: '-1'},
 
 ];
@@ -68,8 +71,7 @@ const ignoredLocations = [
 ];
 const template = `{{ObjectLocLine
 |name = {{NAME}}
-|loc = {{LOCATION}}{{FLOOR}}
-|mem = Yes
+|loc = {{LOCATION}}{{FLOOR}}{{MEMBER}}
 {{LOCATIONS}}
 |mapID = {{MAPID}}{{PLANE}}
 }}`;
@@ -218,6 +220,7 @@ async function getIDsAndCoords(ids) {
             const floorString = plane > 0 ? " ({{FloorNumber|" + ((+plane) + 1) + "}})" : ''
             const planeString = plane > 0 ? "\n|plane=" + plane : ''
             if (!useTemplate2) {
+                const memberText = member ? '|mem = yes' : '';
                 results.push(
                     template.replaceAll('{{LOCATIONS}}', formatData(locationData).toString().replaceAll(",|", "|"))
                         .replaceAll('{{LOCATION}}', locationName)
@@ -225,6 +228,7 @@ async function getIDsAndCoords(ids) {
                         .replaceAll('{{FLOOR}}', floorString)
                         .replaceAll('{{NAME}}', sceneryName)
                         .replaceAll('{{PLANE}}', planeString)
+                        .replaceAll('{{MEMBER}}', memberText)
                 )
                 continue;
             }
