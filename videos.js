@@ -167,6 +167,8 @@ function patchNoteFromDate(date) {
         return 'Update:October Patch Week - This Week In RuneScape'
         case '2024-10-21':
             return 'Update:Gate of Elidinis Drop Rates - This Week In RuneScape'
+        case '2024-10-28':
+            return 'Update:Group Ironman Launch - This Week In RuneScape'
     }
 
     console.error('Uknown update')
@@ -278,4 +280,4 @@ getVideoDetails('vPeTL2hC_h4') // 8 july
 // getShortDetails('wq5hoyRN9gI')
 //getShortDetails('sDnVnFdTe0A')
 //getVideoDetails('38MnO055lyw')
-getVideoDetails('hbjrYU1cgX8')
+getVideoDetails('0bM7I8No900')

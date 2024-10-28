@@ -3,8 +3,8 @@ const fs = require('node:fs');
 const localDataLocation = '../rs3cache/output'
 
 // Example usage
-    const ids = [118772, 118775, 118778, 118781];
-const useTemplate2 = false;
+    const ids = [113901,113902];
+const useTemplate2 = true;
 const member = false;
 
 let sceneryName = 'NOT_FOUND'
@@ -50,6 +50,9 @@ const locations = [
     {name: '[[Blooming Burrow]]', west: 3712, east: 3904, north: 5056, south: 4864, mapId: '747'},
     {name: '[[Harvest Hollow]]', west: 465, east: 831, north: 1850, south: 1600, mapId: '752',},
     {name: '[[Burthorpe]]', west: 2868, east: 2945, north: 3574, south: 3500, mapId: '-1'},
+    {name: '[[Iron Enclave]]', west: 2240, east: 2367, north: 2751, south: 2624, mapId: '-1'},
+    {name: '[[Lumbridge]]', west: 3191, east: 3264, north: 3280, south: 3200, mapId: '-1'},
+    {name: '[[Ancient Cavern]]', west: 1713, east: 1798, north: 5374, south: 5277, mapId: '36'},
     {name: '[[]]', west: 0, east: 0, north: 0, south: 0, mapId: '-1'},
 
 ];
@@ -68,6 +71,7 @@ const ignoredLocations = [
     {name: 'lighthouse copy', west: 2415, east: 2496, north: 4634, south: 4544, mapId: '-1'},
     {name: '[[Guthixian ruins]]', west: 1719, east: 1780, north: 6076, south: 5970, mapId: '-1'},
     {name: '[[Guthixian ruins]]', west: 1980, east: 2045, north: 6076, south: 6017, mapId: '-1'},
+    {name: '[[Ancient Cavern Instance]]', west: 1666, east: 1713, north: 5311, south: 5253, mapId: '-1'},
 ];
 const template = `{{ObjectLocLine
 |name = {{NAME}}
