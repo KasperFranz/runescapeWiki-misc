@@ -3,9 +3,10 @@ const fs = require('node:fs');
 const localDataLocation = '../rs3cache/output'
 
 // Example usage
-    const ids = [113901,113902];
+const ids = [25338, 39468];
 const useTemplate2 = true;
-const member = false;
+const member = true;
+const goOnline = false;
 
 let sceneryName = 'NOT_FOUND'
 
@@ -53,6 +54,8 @@ const locations = [
     {name: '[[Iron Enclave]]', west: 2240, east: 2367, north: 2751, south: 2624, mapId: '-1'},
     {name: '[[Lumbridge]]', west: 3191, east: 3264, north: 3280, south: 3200, mapId: '-1'},
     {name: '[[Ancient Cavern]]', west: 1713, east: 1798, north: 5374, south: 5277, mapId: '36'},
+    {name: '[[Orthen Oubliette]]', west: 5696, east: 5824, north: 2880, south: 2816, mapId: '734'},
+    {name: '[[Lunar Isle]]', west: 2039, east: 2183, north: 3965, south: 3841, mapId: '-1'},
     {name: '[[]]', west: 0, east: 0, north: 0, south: 0, mapId: '-1'},
 
 ];
@@ -97,18 +100,23 @@ getIDsAndCoords(ids)
         console.error('Error:', error);
     });
 
-function formatData(data) {
+function formatData(data,multipleIds) {
 
     let resultsTable = [];
     for (let i = 0; i < data.length; i++) {
-        let tempValue = `|x:${(data[i].i * 64 + data[i].x)},y:${(data[i].j * 64 + data[i].y)}`;
+
+        let tempValue = `|{OBJECTID}x:${(data[i].i * 64 + data[i].x)},y:${(data[i].j * 64 + data[i].y)}`;
         //{{Object map|mapID=-1|1494,5227|1502,5222|group}
+        tempValue = tempValue.replace('{OBJECTID}',multipleIds ? `objectid:${data[i].id},` : '')
         resultsTable.push(tempValue);
     }
     return resultsTable;
 }
 
 async function getRemoteData(id) {
+    if(!goOnline){
+        throw new Error('Not found locally');
+    }
     const url = `https://mejrs.github.io/data_rs3/locations/${id}.json`
     const response = await fetch(url, {
         method: 'GET',
@@ -184,12 +192,7 @@ async function getIDsAndCoords(ids) {
                 continue;
             }
             if (dataX >= location.west && dataX <= location.east && dataY >= location.south && dataY <= location.north) {
-                if(location.name === '[[Anachronia]]'){
-                    //Coordinates for Anachronia are offset by (-23*64,31*64).
-   
-                    item.j = item.j+31
-                    item.i = item.i-23
-                }
+                item = await updateItemBasedOnLocation(item, location)
                 const named = location.name + ':::::' + location.mapId
                 if (!Object.hasOwn(tempData, named)) {
                     tempData[named] = {};
@@ -222,14 +225,15 @@ async function getIDsAndCoords(ids) {
         for (const [plane, locationData] of Object.entries(data)) {
 
             const floorString = plane > 0 ? " ({{FloorNumber|" + ((+plane) + 1) + "}})" : ''
-            const planeString = plane > 0 ? "\n|plane=" + plane : ''
+            const planeString = plane > 0 ? "\n|plane = " + plane : ''
             if (!useTemplate2) {
                 const memberText = member ? '|mem = yes' : '';
                 results.push(
-                    template.replaceAll('{{LOCATIONS}}', formatData(locationData).toString().replaceAll(",|", "|"))
+                    template.replaceAll('{{LOCATIONS}}', formatData(locationData,ids.length > 1).toString().replaceAll(",|", "|"))
                         .replaceAll('{{LOCATION}}', locationName)
                         .replaceAll('{{MAPID}}', mapId)
                         .replaceAll('{{FLOOR}}', floorString)
+                        .replaceAll('{{OBJECTID}}', locationData[0].id)
                         .replaceAll('{{NAME}}', sceneryName)
                         .replaceAll('{{PLANE}}', planeString)
                         .replaceAll('{{MEMBER}}', memberText)
@@ -237,7 +241,7 @@ async function getIDsAndCoords(ids) {
                 continue;
             }
             results.push(
-                template2.replaceAll('{{LOCATIONS}}', formatData(locationData).toString().replaceAll(",|", "|"))
+                template2.replaceAll('{{LOCATIONS}}', formatData(locationData,ids.length > 1).toString().replaceAll(",|", "|"))
                     .replaceAll('{{LOCATION}}', locationName)
                     .replaceAll('{{MAPID}}', mapId)
                     .replaceAll('{{OBJECTID}}', locationData[0].id)
@@ -269,4 +273,49 @@ function checkUnwantedLocations(item) {
 
 function compareItems(a, b) {
     return a.plane - b.plane;
+}
+
+
+async function updateItemBasedOnLocation(item, location){
+    if(location.name === '[[Anachronia]]'){
+        //Coordinates for Anachronia are offset by (-23*64,31*64).
+        item.j = item.j+31
+        item.i = item.i-23
+    }else if(location.mapId !== '-1') {
+        bounds = await getBounds(location.mapId)
+
+        let dataY = (item.j * 64 + item.y);
+        let dataX = (item.i * 64 + item.x);
+        for (let bound of bounds){
+            if(bound.plane !== item.plane){
+                continue;
+            }
+
+            if (dataX >= bound.src.west && dataX <= bound.src.east && dataY >= bound.src.south && dataY <= bound.src.north) {
+                let diffWest = bound.src.west-bound.dst.west;
+                let diffNorth = bound.src.north-bound.dst.north;
+                item.i= item.i-Math.floor(diffWest/64)
+                item.j= item.j-Math.floor(diffNorth/64)
+
+                item.plane = 0
+
+                if(item.i !== Math.floor(item.i) || item.j !== Math.floor(item.j)){
+                    console.log('ERROR!!')
+                }
+            
+            }
+        }
+    }
+    return item
+}
+
+
+async function getLocalMapData() {
+    const path = `${localDataLocation}/map_zones.json`
+    return JSON.parse(fs.readFileSync(path, 'utf8'));
+}
+
+async function getBounds(mapId){
+    let data = await getLocalMapData();
+    return data .find(x => x.id == mapId).bounds;
 }
