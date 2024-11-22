@@ -1,9 +1,12 @@
 const fs = require('node:fs');
+const { type } = require('node:os');
 
 const localDataLocation = '../rs3cache/output'
 
 // Example usage
-const ids = [25338, 39468];
+const ids = [
+    [123724],
+];
 const useTemplate2 = true;
 const member = true;
 const goOnline = false;
@@ -18,9 +21,9 @@ const locations = [
     {name: '[[Daemonheim]]', west: 3374, east: 3525, north: 3796, south: 3607, mapId: '28'},
     {name: '[[Freneskae]]', west: 2560, east: 2816, north: 12607, south: 12287, mapId: '-1'},
     {name: '[[Freneskae#The_Ritual_Site|Freneskae Ritual Site]]', west: 2428, east: 2561, north: 12547, south: 12350, mapId: '-1'},
-    {name: '[[Mort Myre Swamp]]', west: 3398, east: 3646, north: 3528, south: 3252, mapId: '28'},
+    {name: '[[Mort Myre Swamp]]', west: 3398, east: 3710, north: 3528, south: 3252, mapId: '28'},
     {name: '[[The beach]]', west: 3140, east: 3193, north: 3260, south: 3203, mapId: '28'},
-    {name: '[[Het\'s Oasis]]', west: 3324, east: 3409, north: 3269, south: 3203, mapId: '28'},
+    {name: '[[Het\'s Oasis]]', west: 3312, east: 3409, north: 3280, south: 3203, mapId: '28'},
     {name: '[[Al Kharid]]', west: 3266, east: 3334, north: 3269, south: 3133, mapId: '28'},
     {name: '[[Fort Forinthry]]', west: 3273, east: 3337, north: 3578, south: 3530, mapId: '-28'},
     {name: '[[Wizards\' Tower]]', west: 3065, east: 3136, north: 3196, south: 3123, mapId: '28'},
@@ -42,20 +45,33 @@ const locations = [
     {name: '[[Rex Matriarch lair]]', west: 3840, east: 3968, north: 9920, south: 9793, mapId: '750'},
     {name: '[[Anachronia]]', west: 5248, east: 5760, north: 2626, south: 2047, mapId: '28'},
     {name: '[[Sophanem]]', west: 3266, east: 3323, north: 2807, south: 2631, mapId: '28'},
+    {name: '[[Menaphos Imperial district]]', west: 3048, east: 3179, north: 2770, south: 2674, mapId: '28'},
+    {name: '[[Menaphos Merchant district]]', west: 3176, east: 3254, north: 2816, south: 2747, mapId: '28'},
+    {name: '[[Menaphos Worker district]]', west: 3131, east: 3176, north: 2825, south: 2770, mapId: '28'},
+    {name: '[[Rock Island Prison]]', west: 3015, east: 3062, north: 2997, south: 2958, mapId: '28'},
+    {name: '[[Menaphos]]', west: 3076, east: 3263, north: 2819, south: 2606, mapId: '28'},
+    {name: '[[Scabarite Cavern]]', west: 3264, east: 3327, north: 7615, south: 7552, mapId: '753'},
     {name: '[[Kharidian Desert]]', west: 3023, east: 3527, north: 3125, south: 2541, mapId: '28'},
-    {name: '[[Prison (Fort Forinthry)]]', west: 1920, east: 1984, north: 1727, south: 1664, mapId: '-1'},
+    {name: '[[Prison (Fort Forinthry)]]', west: 1920, east: 1984, north: 1727, south: 1664, mapId: '751'},
     {name: '[[Dream World]]', west: 1728, east: 1792, north: 5120, south: 5056, mapId: '-1'},
     {name: '[[Dream World]] (fighting with [[me]])', west: 1792, east: 1856, north: 5120, south: 5056, mapId: '-1'},
     {name: '[[Troll Stronghold (area)|Troll Stronghold]]', west: 2816, east: 2880, north: 10112, south: 10048, mapId: '-1'},
     {name: '[[Guthixian ruins]]', west: 1780, east: 1918, north: 6076, south: 6021, mapId: '-1'},
     {name: '[[Blooming Burrow]]', west: 3712, east: 3904, north: 5056, south: 4864, mapId: '747'},
-    {name: '[[Harvest Hollow]]', west: 465, east: 831, north: 1850, south: 1600, mapId: '752',},
+    {name: '[[Harvest Hollow]]', west: 460, east: 831, north: 1850, south: 1600, mapId: '752',},
     {name: '[[Burthorpe]]', west: 2868, east: 2945, north: 3574, south: 3500, mapId: '-1'},
     {name: '[[Iron Enclave]]', west: 2240, east: 2367, north: 2751, south: 2624, mapId: '-1'},
     {name: '[[Lumbridge]]', west: 3191, east: 3264, north: 3280, south: 3200, mapId: '-1'},
     {name: '[[Ancient Cavern]]', west: 1713, east: 1798, north: 5374, south: 5277, mapId: '36'},
     {name: '[[Orthen Oubliette]]', west: 5696, east: 5824, north: 2880, south: 2816, mapId: '734'},
     {name: '[[Lunar Isle]]', west: 2039, east: 2183, north: 3965, south: 3841, mapId: '-1'},
+    {name: '[[God Wars Dungeon]]', west: 2816, east: 2944, north: 5376, south: 5238, mapId: '15'},
+    {name: '[[Ancient Prison]]', west: 2816, east: 2944, north: 5239, south: 5184, mapId: '15'},
+    {name: '[[Dorgesh-Kaan]]', west: 2688, east: 2752, north: 5376, south: 5248, mapId: '26'},
+    {name: '[[Red Axe base|Hreidmar\'s palace]]', west: 1792, east: 1856, north: 6272, south: 6208, mapId: '-1'},
+    {name: '[[Keldagrim]]', west: 2816, east: 2943, north: 10304, south: 10112, mapId: '21'},
+    {name: '[[Keldagrim rat pits]]', west: 1920, east: 1983, north: 4735, south: 4672, mapId: '191'},
+    {name: 'Consortium meeting room', west: 1984, east: 2047, north: 4543, south: 4480, mapId: '248'},
     {name: '[[]]', west: 0, east: 0, north: 0, south: 0, mapId: '-1'},
 
 ];
@@ -63,8 +79,10 @@ const locations = [
 const ignoredLocations = [
     {name: 'Senntisten instance (Twilight of the gods)', west: 1595, east: 2049, north: 2054, south: 1791, mapId: '-1'},
     {name: 'Senntisten instance (City of Senntisten)', west: 514, east: 900, north: 529, south: 129, mapId: '-1'},
-    {name: 'Mort Myre Swamp instance', west: 1984, east: 2050, north: 5056, south: 4990, mapId: '-1'},
+    {name: 'Mort Myre Swamp instance', west: 1984, east: 2079, north: 5056, south: 4990, mapId: '-1'},
+    {name: 'Mort Myre Swamp instance', west: 2240, east: 2496, north: 5056, south: 4992, mapId: '-1'},
     {name: 'Mort Myre Swamp instance', west: 3778, east: 3969, north: 7746, south: 7550, mapId: '-1'},
+    {name: 'Mort Myre Swamp instance', west: 2688, east: 2752, north: 5056, south: 4992, mapId: '-1'},
     {name: 'Fort Forinthry instance', west: 1280, east: 1344, north: 1536, south: 1472, mapId: '-1'},
     {name: 'Fort Forinthry instance 2', west: 1152, east: 1408, north: 2240, south: 2111, mapId: '-1'},
     {name: 'Wizards tower instance', west: 1153, east: 1216, north: 4864, south: 4800, mapId: '-1'},
@@ -75,6 +93,9 @@ const ignoredLocations = [
     {name: '[[Guthixian ruins]]', west: 1719, east: 1780, north: 6076, south: 5970, mapId: '-1'},
     {name: '[[Guthixian ruins]]', west: 1980, east: 2045, north: 6076, south: 6017, mapId: '-1'},
     {name: '[[Ancient Cavern Instance]]', west: 1666, east: 1713, north: 5311, south: 5253, mapId: '-1'},
+    {name: '[[Rock island prison instance]]', west: 2752, east: 2944, north: 1536, south: 1472, mapId: '-1'},
+    {name: '[[Dorgesh-Kaan instance]]', west: 2432, east: 2495, north: 4351, south: 4288, },
+
 ];
 const template = `{{ObjectLocLine
 |name = {{NAME}}
@@ -84,21 +105,32 @@ const template = `{{ObjectLocLine
 }}`;
 
 const template2 = `|map = {{Object map|mapID={{MAPID}}{{PLANE}}|objectid={{OBJECTID}}{{LOCATIONS}}}}`
+if(typeof ids[0] == 'object'){
+    for(let id of ids){
+        handleGroup(id)
+    }
+}else{
+    handleGroup(ids)
+}
 
-getIDsAndCoords(ids)
-    .then(output => {
-        if (output.length === 0) {
-            return
-        }
-        fs.writeFile('output/locations/' + sceneryName.replaceAll(' ', '_') + ids.join('_') + '.md', output, err => {
-            if (err) {
-                console.error(err);
+
+async function handleGroup(ids){
+    getIDsAndCoords(ids)
+        .then(output => {
+            if (output.length === 0) {
+                return
             }
+            fs.writeFile('output/locations/' + sceneryName.replaceAll(' ', '_') + ids.join('_') + '.md', output, err => {
+                if (err) {
+                    console.error(err);
+                }
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
         });
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
+
+}
 
 function formatData(data,multipleIds) {
 
@@ -221,13 +253,15 @@ async function getIDsAndCoords(ids) {
 
     for (const [key, data] of Object.entries(tempData)) {
         let [locationName, mapId] = key.split(':::::');
-
-        for (const [plane, locationData] of Object.entries(data)) {
-
+        
+        for (let [plane, locationData] of Object.entries(data)) {
+            let fakePlane = plane.indexOf('-fake') > -1
+            plane = plane.replace('-fake','');
             const floorString = plane > 0 ? " ({{FloorNumber|" + ((+plane) + 1) + "}})" : ''
-            const planeString = plane > 0 ? "\n|plane = " + plane : ''
+            const planeString = !fakePlane && plane > 0 ? "\n|plane = " + plane : ''
             if (!useTemplate2) {
-                const memberText = member ? '|mem = yes' : '';
+                const memberText = member ? `
+|mem = Yes` : '';
                 results.push(
                     template.replaceAll('{{LOCATIONS}}', formatData(locationData,ids.length > 1).toString().replaceAll(",|", "|"))
                         .replaceAll('{{LOCATION}}', locationName)
@@ -282,14 +316,26 @@ async function updateItemBasedOnLocation(item, location){
         item.j = item.j+31
         item.i = item.i-23
     }else if(location.mapId !== '-1') {
-        bounds = await getBounds(location.mapId)
+        let response = await transformBasedOnBounds(location, item, item.plane)
+        if(!response.transformed && item.plane > 0){
+            response = await transformBasedOnBounds(location, item, 0)
+            console.log('transform again!')
+        }
+        item = response.item
+    }
+    return item
+}
 
-        let dataY = (item.j * 64 + item.y);
-        let dataX = (item.i * 64 + item.x);
+async function transformBasedOnBounds(location, item, plane){
+    bounds = await getBounds(location.mapId)
+    transformed = false;
         for (let bound of bounds){
-            if(bound.plane !== item.plane){
+            if(bound.plane !== plane){
                 continue;
             }
+
+            let dataY = (item.j * 64 + item.y);
+            let dataX = (item.i * 64 + item.x);
 
             if (dataX >= bound.src.west && dataX <= bound.src.east && dataY >= bound.src.south && dataY <= bound.src.north) {
                 let diffWest = bound.src.west-bound.dst.west;
@@ -297,18 +343,22 @@ async function updateItemBasedOnLocation(item, location){
                 item.i= item.i-Math.floor(diffWest/64)
                 item.j= item.j-Math.floor(diffNorth/64)
 
-                item.plane = 0
-
-                if(item.i !== Math.floor(item.i) || item.j !== Math.floor(item.j)){
-                    console.log('ERROR!!')
+                if(item.plane == plane){
+                item.plane += '-fake'
                 }
-            
+
+                if(Math.floor(diffWest/64) !== diffWest/64){
+                    item.x = item.x-(diffWest/64-Math.floor(diffWest/64))*64;
+                }
+
+                if(Math.floor(diffNorth/64) !== diffNorth/64){
+                    item.y = item.y-(diffNorth/64-Math.floor(diffNorth/64))*64;
+                }   
+                transformed = true
             }
         }
-    }
-    return item
+        return {item: item, transformed: transformed}
 }
-
 
 async function getLocalMapData() {
     const path = `${localDataLocation}/map_zones.json`
