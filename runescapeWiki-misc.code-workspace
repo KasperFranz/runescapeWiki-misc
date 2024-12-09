@@ -1,9 +1,11 @@
 {
 	"folders": [
 		{
+			"name": "runescapeWiki-misc",
 			"path": "."
 		},
 		{
+			"name": "output",
 			"path": "../rs3cache/output"
 		}
 	],
