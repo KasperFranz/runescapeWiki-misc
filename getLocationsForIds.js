@@ -73,8 +73,8 @@ const locations = [
     {name: '[[Keldagrim rat pits]]', west: 1920, east: 1983, north: 4735, south: 4672, mapId: '191'},
     {name: 'Consortium meeting room', west: 1984, east: 2047, north: 4543, south: 4480, mapId: '248'},
     {name: '[[The Lost Grove]] during [[Twilight of the Gods]]', west: 1216, east: 1280, north: 5696, south: 5632, mapId: '-1'},
+    {name: '[[The Land of Snow\'s Christmas Village]]', west: 5120, east: 5311, north: 9855, south: 9728, mapId: '746'},
     {name: '[[]]', west: 0, east: 0, north: 0, south: 0, mapId: '-1'},
-
 ];
 
 const ignoredLocations = [
