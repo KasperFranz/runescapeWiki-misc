@@ -101,7 +101,7 @@ function formatName(title) {
 }
 
 function formatImageName(title) {
-    return title.replaceAll('|', '-').replaceAll('#', '').replaceAll(':', '-').replaceAll('!','').replaceAll('&','').replaceAll('  ',' ').replaceAll('?','-') + '.jpg';
+    return title.replaceAll('|', '-').replaceAll('#', '').replaceAll('!','').replaceAll('&','').replaceAll('  ',' ').replaceAll('?','-') + '.jpg';
 }
 
 function formatSubject(category, snippet) {
@@ -173,6 +173,9 @@ function patchNoteFromDate(date) {
             return 'Update:New Slayer Mobs & Premier Refresh - This Week In RuneScape'
         case '2024-11-25':
             return 'Update:November PostJam Patch Week - This Week In RuneScape'
+        case '2024-12-02':
+        case '2024-12-03':
+            return 'Update:\'Tis the Season , Christmas Village Returns - This Week In RuneScape'
     }
 
     console.error('Uknown update')
@@ -286,4 +289,9 @@ getVideoDetails('vPeTL2hC_h4') // 8 july
 //getVideoDetails('38MnO055lyw')
 //getShortDetails('BapPbQ-a4ns')
 //getShortDetails('tDdVnQOSr9E')
-getVideoDetails('asmzQVRlOKA')
+//getVideoDetails('asmzQVRlOKA')
+//getShortDetails('WnUMz9zcv38')
+//getShortDetails('xXMZc6SSAjg')
+//getVideoDetails('Fi-AXZOErD8')
+//getVideoDetails('VHwOcMrjP9E')
+getShortDetails('Lueiz5k0eDI')
