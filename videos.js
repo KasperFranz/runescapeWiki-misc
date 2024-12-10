@@ -176,6 +176,8 @@ function patchNoteFromDate(date) {
         case '2024-12-02':
         case '2024-12-03':
             return 'Update:\'Tis the Season , Christmas Village Returns - This Week In RuneScape'
+        case '2024-12-10':
+            return 'Update:110 Woodcutting and Fletching Launching Today! - This Week In RuneScape'
     }
 
     console.error('Uknown update')
@@ -294,4 +296,6 @@ getVideoDetails('vPeTL2hC_h4') // 8 july
 //getShortDetails('xXMZc6SSAjg')
 //getVideoDetails('Fi-AXZOErD8')
 //getVideoDetails('VHwOcMrjP9E')
-getShortDetails('Lueiz5k0eDI')
+//getShortDetails('Lueiz5k0eDI')
+
+getVideoDetails('NKWZPQIIc1U')
