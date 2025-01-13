@@ -5,7 +5,7 @@ const localDataLocation = '../rs3cache/output'
 
 // Example usage
 const ids = [
-    [121737],
+    [123731],
 ];
 const useTemplate2 = true;
 const member = true;
@@ -229,6 +229,9 @@ async function getIDsAndCoords(ids) {
             console.error(error + " Directly");
         }
             const morphs = getMorphIds(id)
+            if(morphs.length == 0){
+                console.log('no morphs')
+            }
             for(const morph of morphs){
                 try {
                     console.log('trying morph')
