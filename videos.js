@@ -101,7 +101,7 @@ function formatName(title) {
 }
 
 function formatImageName(title) {
-    return title.replaceAll('|', '-').replaceAll('#', '').replaceAll('!','').replaceAll('&','').replaceAll('  ',' ').replaceAll('?','-') + '.jpg';
+    return title.replaceAll('|', '-').replaceAll('#', '').replaceAll('!','').replaceAll('&','').replaceAll('  ',' ').replaceAll('?','-').replaceAll(':', '-')+ '.jpg';
 }
 
 function formatSubject(category, snippet) {
@@ -178,6 +178,10 @@ function patchNoteFromDate(date) {
             return 'Update:\'Tis the Season , Christmas Village Returns - This Week In RuneScape'
         case '2024-12-10':
             return 'Update:110 Woodcutting and Fletching Launching Today! - This Week In RuneScape'
+        case '2024-12-16':
+            return 'Update:Shooting Star Refresh - This Week In RuneScape'
+        case '2025-01-13':
+            return 'Update:Beneath Scabaras\' Sands Quest Launch - This Week In RuneScape'
     }
 
     console.error('Uknown update')
@@ -298,4 +302,8 @@ getVideoDetails('vPeTL2hC_h4') // 8 july
 //getVideoDetails('VHwOcMrjP9E')
 //getShortDetails('Lueiz5k0eDI')
 
-getVideoDetails('NKWZPQIIc1U')
+// getVideoDetails('NKWZPQIIc1U')
+// getShortDetails('A7xnKZNq_D8')
+// getVideoDetails('gYZljbrvsm0')
+
+getVideoDetails('Z2xe2_odnrc')

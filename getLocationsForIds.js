@@ -5,7 +5,7 @@ const localDataLocation = '../rs3cache/output'
 
 // Example usage
 const ids = [
-    [123724],
+    [121737],
 ];
 const useTemplate2 = true;
 const member = true;
@@ -13,6 +13,7 @@ const goOnline = false;
 
 let sceneryName = 'NOT_FOUND'
 
+let morph_mapping;
 
 const locations = [
     {name: '[[Senntisten]]', west: 1535, east: 2112, north: 1417, south: 1088, mapId: '-1'},
@@ -56,10 +57,10 @@ const locations = [
     {name: '[[Dream World]]', west: 1728, east: 1792, north: 5120, south: 5056, mapId: '-1'},
     {name: '[[Dream World]] (fighting with [[me]])', west: 1792, east: 1856, north: 5120, south: 5056, mapId: '-1'},
     {name: '[[Troll Stronghold (area)|Troll Stronghold]]', west: 2816, east: 2880, north: 10112, south: 10048, mapId: '-1'},
-    {name: '[[Guthixian ruins]]', west: 1780, east: 1918, north: 6076, south: 6021, mapId: '-1'},
-    {name: '[[Blooming Burrow]]', west: 3712, east: 3904, north: 5056, south: 4864, mapId: '747'},
-    {name: '[[Harvest Hollow]]', west: 460, east: 831, north: 1850, south: 1600, mapId: '752',},
-    {name: '[[Burthorpe]]', west: 2868, east: 2945, north: 3574, south: 3500, mapId: '-1'},
+    {name: '[[Guthixian ruins]]', west: 1780, east: 1918, north: 6076, south: 6021, mapId: '-1', member: true},
+    {name: '[[Blooming Burrow]]', west: 3712, east: 3904, north: 5056, south: 4864, mapId: '747', member: false},
+    {name: '[[Harvest Hollow]]', west: 460, east: 831, north: 1850, south: 1600, mapId: '752', member: false},
+    {name: '[[Burthorpe]]', west: 2868, east: 2945, north: 3574, south: 3495, mapId: '28', member: false},
     {name: '[[Iron Enclave]]', west: 2240, east: 2367, north: 2751, south: 2624, mapId: '-1'},
     {name: '[[Lumbridge]]', west: 3191, east: 3264, north: 3280, south: 3200, mapId: '-1'},
     {name: '[[Ancient Cavern]]', west: 1713, east: 1798, north: 5374, south: 5277, mapId: '36'},
@@ -74,7 +75,15 @@ const locations = [
     {name: 'Consortium meeting room', west: 1984, east: 2047, north: 4543, south: 4480, mapId: '248'},
     {name: '[[The Lost Grove]] during [[Twilight of the Gods]]', west: 1216, east: 1280, north: 5696, south: 5632, mapId: '-1'},
     {name: '[[The Land of Snow\'s Christmas Village]]', west: 5120, east: 5311, north: 9855, south: 9728, mapId: '746'},
-    {name: '[[]]', west: 0, east: 0, north: 0, south: 0, mapId: '-1'},
+    {name: '[[Shattered Worlds]]', west: 2944, east: 3456, north: 6656, south: 6400, mapId: '-1'},
+    {name: '[[Shattered Worlds]]', west: 832, east: 960, north: 704, south: 640, mapId: '-1'},
+    {name: '[[Burthorpe]] (Troll Warzone cutscene, historical)', west: 1088, east: 1157, north: 5957, south: 5888, mapId: '-1'},
+    {name: '[[Burthorpe]] (2016 Halloween event, historical)', west: 4352, east: 4672, north: 11648, south: 11456, mapId: '-1', member: false},
+    {name: '[[Heist]]', west: 2560, east: 2880, north: 1344, south: 1216, mapId: '-1'},
+    {name: '[[Temple of Isolation]]', west: 3392, east: 3519, north: 7615, south: 7552, mapId: '754'},
+    {name: '[[Soul Rune Temple]]', west: 1920, east: 1984, north: 6720, south: 6656, mapId: '-1'},
+    {name: '[[Iceberg]]', west: 2624, east: 2752, north: 4096, south: 3968, mapId: '28'},
+    {name: '[[]]', west: null, east: null, north: null, south: null, mapId: '-1'},
 ];
 
 const ignoredLocations = [
@@ -148,7 +157,7 @@ function formatData(data,multipleIds) {
 
 async function getRemoteData(id) {
     if(!goOnline){
-        throw new Error('Not found locally');
+        throw new Error(` ${id} Not found locally`);
     }
     const url = `https://mejrs.github.io/data_rs3/locations/${id}.json`
     const response = await fetch(url, {
@@ -175,6 +184,14 @@ async function getLocalData(id) {
 async function getLocationConfigLocal(id) {
     const path = `${localDataLocation}/location_configs/${id}.json`
     return JSON.parse(fs.readFileSync(path, 'utf8'));
+}
+
+function getMorphIds(id){
+    if(morph_mapping === undefined){
+        const path = `${localDataLocation}/generated/morphs.json`
+        morph_mapping = JSON.parse(fs.readFileSync(path, 'utf8'));
+    }
+    return id.toString() in morph_mapping ? morph_mapping[id.toString()] : []
 }
 
 async function getData(id) {
@@ -208,10 +225,19 @@ async function getIDsAndCoords(ids) {
 
         try {
             data = data.concat(await getData(id));
-
         } catch (error) {
-            console.error(error);
+            console.error(error + " Directly");
         }
+            const morphs = getMorphIds(id)
+            for(const morph of morphs){
+                try {
+                    console.log('trying morph')
+                    data = data.concat(await getData(morph));
+                } catch (error) {
+                    console.error(error + " Morph");
+                }
+            }
+
     }
 
     data.sort(compareItems)
@@ -259,7 +285,7 @@ async function getIDsAndCoords(ids) {
             let fakePlane = plane.indexOf('-fake') > -1
             plane = plane.replace('-fake','');
             const floorString = plane > 0 ? " ({{FloorNumber|" + ((+plane) + 1) + "}})" : ''
-            const planeString = !fakePlane && plane > 0 ? "\n|plane = " + plane : ''
+            const planeString = !fakePlane && plane > 0 ? "\n|plane=" + plane : ''
             if (!useTemplate2) {
                 const memberText = member ? `
 |mem = Yes` : '';
