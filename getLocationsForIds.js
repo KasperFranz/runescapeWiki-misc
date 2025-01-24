@@ -5,10 +5,10 @@ const localDataLocation = '../rs3cache/output'
 
 // Example usage
 const ids = [
-    [123731],
+    [1175,1176,1177],
 ];
-const useTemplate2 = true;
-const member = true;
+const useTemplate2 = false;
+const defaultmember = true;
 const goOnline = false;
 
 let sceneryName = 'NOT_FOUND'
@@ -83,6 +83,17 @@ const locations = [
     {name: '[[Temple of Isolation]]', west: 3392, east: 3519, north: 7615, south: 7552, mapId: '754'},
     {name: '[[Soul Rune Temple]]', west: 1920, east: 1984, north: 6720, south: 6656, mapId: '-1'},
     {name: '[[Iceberg]]', west: 2624, east: 2752, north: 4096, south: 3968, mapId: '28'},
+    {name: '[[Enchanted Valley]]', west: 3008, east: 3071, north: 4543, south: 4480, mapId: '175'},
+    {name: '[[Ape Atoll]]', west: 2688, east: 2816, north: 2816, south: 2688, mapId: '28'},
+    {name: '[[Isafdar]]', west: 2144, east: 2318, north: 3266, south: 3115, mapId: '28'},
+    {name: '[[Water altar]]', west: 3456, east: 3520, north: 4864, south: 4800, mapId: '159'},
+    {name: '[[Nature altar]]', west: 2368, east: 2431, north: 4863, south: 4800, mapId: '151'},
+    {name: 'east of [[Draynor Village]]', west: 3131, east: 3161, north: 3293, south: 3249, mapId: '28', member: false},
+    {name: '[[Barbarian Outpost]]', west: 2496, east: 2560, north: 3584, south: 3520, mapId: '28'},
+    {name: '[[Crondis\'s pyramid]]', west: 2176, east: 2240, north: 6784, south: 6720, mapId: '-1'},
+    {name: '[[Life altar]]', west: 1024, east: 1088, north: 5569, south: 5504, mapId: '-1'},
+    {name: '[[Yanille]]', west: 2496, east: 2623, north: 3113, south: 3071, mapId: '28'},
+    {name: '[[Ardougne Zoo]]', west: 2591, east: 2640, north: 3290, south: 3256, mapId: '28'},
     {name: '[[]]', west: null, east: null, north: null, south: null, mapId: '-1'},
 ];
 
@@ -105,6 +116,10 @@ const ignoredLocations = [
     {name: '[[Ancient Cavern Instance]]', west: 1666, east: 1713, north: 5311, south: 5253, mapId: '-1'},
     {name: '[[Rock island prison instance]]', west: 2752, east: 2944, north: 1536, south: 1472, mapId: '-1'},
     {name: '[[Dorgesh-Kaan instance]]', west: 2432, east: 2495, north: 4351, south: 4288, },
+    {name: '2018 halloween', west: 4864, east: 4992, north: 9408, south: 9344, },
+    {name: 'Annarkarl cutscene', west: 4288, east: 4352, north: 5760, south: 5696, },
+    {name: 'Varrock part cutscene', west: 2432, east: 2560, north: 6528, south: 6335, },
+    {name: 'Yanille part cutscene', west: 2880, east: 2944, north: 4789, south: 4672, },
 
 ];
 const template = `{{ObjectLocLine
@@ -255,7 +270,7 @@ async function getIDsAndCoords(ids) {
             }
             if (dataX >= location.west && dataX <= location.east && dataY >= location.south && dataY <= location.north) {
                 item = await updateItemBasedOnLocation(item, location)
-                const named = location.name + ':::::' + location.mapId
+                const named = location.name + ':::::' + location.mapId + ':::::' + ((Object.hasOwn(location, 'member') ? location['member'] : defaultmember) ? 1 : 0);
                 if (!Object.hasOwn(tempData, named)) {
                     tempData[named] = {};
                 }
@@ -282,15 +297,14 @@ async function getIDsAndCoords(ids) {
     }
 
     for (const [key, data] of Object.entries(tempData)) {
-        let [locationName, mapId] = key.split(':::::');
-        
+        let [locationName, mapId, member] = key.split(':::::');
         for (let [plane, locationData] of Object.entries(data)) {
             let fakePlane = plane.indexOf('-fake') > -1
             plane = plane.replace('-fake','');
             const floorString = plane > 0 ? " ({{FloorNumber|" + ((+plane) + 1) + "}})" : ''
             const planeString = !fakePlane && plane > 0 ? "\n|plane=" + plane : ''
             if (!useTemplate2) {
-                const memberText = member ? `
+                const memberText = member == 1 ? `
 |mem = Yes` : '';
                 results.push(
                     template.replaceAll('{{LOCATIONS}}', formatData(locationData,ids.length > 1).toString().replaceAll(",|", "|"))

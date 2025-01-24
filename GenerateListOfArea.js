@@ -1,7 +1,7 @@
 import { readFileSync, writeFile as _writeFile } from 'node:fs';
 import JSON5 from 'json5'
 
-const location = '54_118'
+const location = '47_70'
 
 async function getFile(file) {
     const path = `output/${file}.json5`
@@ -34,7 +34,7 @@ for(let item of items){
     ){
         const data =await callWikiAPI(item['id'])
         let onWiki = Object.keys(data['query']['results']).length
-       // console.log(`https://runescape.wiki/w/Special:SearchByProperty?limit=20&property=All+Object+ID&value=${item['id']}`)
+       // console.log(`https://runescape.wiki/w/Special:SearchByProperty?limit=20&property=Object+ID&value=${item['id']}`)
        if(onWiki){
         foundId.push(item['id'])
        }else{
@@ -54,7 +54,7 @@ if(notFoundIds.length > 0){
 }
 
 async function callWikiAPI(id){
-    const url = 'https://runescape.wiki/api.php?action=ask&format=json&query='+ encodeURI(`[[All Object ID::${id}]]`)
+    const url = 'https://runescape.wiki/api.php?action=ask&format=json&query='+ encodeURI(`[[Object ID::${id}]]`)
     let response = await fetch(url, {
         method: 'GET',
         headers: {
