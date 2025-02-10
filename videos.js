@@ -306,4 +306,6 @@ getVideoDetails('vPeTL2hC_h4') // 8 july
 // getShortDetails('A7xnKZNq_D8')
 // getVideoDetails('gYZljbrvsm0')
 
-getVideoDetails('Z2xe2_odnrc')
+//getVideoDetails('Z2xe2_odnrc')
+
+getShortDetails('EOUO1cPX-9E')
