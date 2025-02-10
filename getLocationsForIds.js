@@ -5,9 +5,9 @@ const localDataLocation = '../rs3cache/output'
 
 // Example usage
 const ids = [
-    [1175,1176,1177],
+    [22945]
 ];
-const useTemplate2 = false;
+const useTemplate2 = true;
 const defaultmember = true;
 const goOnline = false;
 
@@ -94,6 +94,15 @@ const locations = [
     {name: '[[Life altar]]', west: 1024, east: 1088, north: 5569, south: 5504, mapId: '-1'},
     {name: '[[Yanille]]', west: 2496, east: 2623, north: 3113, south: 3071, mapId: '28'},
     {name: '[[Ardougne Zoo]]', west: 2591, east: 2640, north: 3290, south: 3256, mapId: '28'},
+    {name: '[[Observatory]]', west: 2423, east: 2481, north: 3201, south: 3149, mapId: '28'},
+    {name: '[[Ourania Hunter area]]', west: 2438, east: 2478, north: 3255, south: 3216, mapId: '28'},
+    {name: '[[Fight Arena (location)|Fight Arena]]', west: 2559, east: 2626, north: 3199, south: 3136, mapId: '28'},
+    {name: '[[Silvarea]]', west: 3334, east: 3403, north: 3533, south: 3490, mapId: '28'},
+    {name: '[[Seers\' Village]]', west: 2688, east: 2742, north: 3510, south: 3455, mapId: '28'},
+    {name: 'House west of [[McGrubor\'s Wood]]', west: 2608, east: 2618, north: 3482, south: 3472, mapId: '28'},
+    {name: '[[Clock Tower (building)|Clock Tower]]', west: 2563, east: 2577, north: 3256, south: 3232, mapId: '28'},
+    {name: '[[Ardougne Monastery]]', west: 2587, east: 2624, north: 3221, south: 3202, mapId: '28'},
+    {name: 'Some house?', west: 2508, east: 2528, north: 3439, south: 3423, mapId: '-1'},
     {name: '[[]]', west: null, east: null, north: null, south: null, mapId: '-1'},
 ];
 
