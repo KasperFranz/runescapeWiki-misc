@@ -1,7 +1,7 @@
 import { readFileSync, writeFile as _writeFile } from 'node:fs';
 import JSON5 from 'json5'
 
-const location = '47_70'
+const location = '41_49'
 
 async function getFile(file) {
     const path = `output/${file}.json5`

@@ -92,8 +92,14 @@ const locations = [
     {name: '[[Barbarian Outpost]]', west: 2496, east: 2560, north: 3584, south: 3520, mapId: '28'},
     {name: '[[Crondis\'s pyramid]]', west: 2176, east: 2240, north: 6784, south: 6720, mapId: '-1'},
     {name: '[[Life altar]]', west: 1024, east: 1088, north: 5569, south: 5504, mapId: '-1'},
+    {name: 'House north of [[Yanille]]', west: 2564, east: 2576, north: 3128, south: 3117, mapId: '28'},
     {name: '[[Yanille]]', west: 2496, east: 2623, north: 3113, south: 3071, mapId: '28'},
+    {name: '[[Brimhaven]]', west: 2754, east: 2816, north: 3208, south: 3151, mapId: '28'},
+    {name: '[[Port Khazard]]', west: 2626, east: 2687, north: 3197, south: 3140, mapId: '28'},
     {name: '[[Ardougne Zoo]]', west: 2591, east: 2640, north: 3290, south: 3256, mapId: '28'},
+    {name: '[[West Ardougne]]', west: 2434, east: 2559, north: 3337, south: 3264, mapId: '28'},
+    {name: '[[Miscellania]]', west: 2490, east: 2577, north: 3906, south: 3834, mapId: '28'},
+    {name: '[[Mort\'ton]]', west: 3460, east: 3525, north: 3310, south: 3259, mapId: '28'},
     {name: '[[Observatory]]', west: 2423, east: 2481, north: 3201, south: 3149, mapId: '28'},
     {name: '[[Ourania Hunter area]]', west: 2438, east: 2478, north: 3255, south: 3216, mapId: '28'},
     {name: '[[Fight Arena (location)|Fight Arena]]', west: 2559, east: 2626, north: 3199, south: 3136, mapId: '28'},
@@ -103,6 +109,7 @@ const locations = [
     {name: '[[Clock Tower (building)|Clock Tower]]', west: 2563, east: 2577, north: 3256, south: 3232, mapId: '28'},
     {name: '[[Ardougne Monastery]]', west: 2587, east: 2624, north: 3221, south: 3202, mapId: '28'},
     {name: 'Some house?', west: 2508, east: 2528, north: 3439, south: 3423, mapId: '-1'},
+    {name: 'West of [[Varrock]]', west: 3111, east: 3119, north: 3455, south: 3448, mapId: '-1', member: false},
     {name: '[[]]', west: null, east: null, north: null, south: null, mapId: '-1'},
 ];
 
@@ -129,6 +136,7 @@ const ignoredLocations = [
     {name: 'Annarkarl cutscene', west: 4288, east: 4352, north: 5760, south: 5696, },
     {name: 'Varrock part cutscene', west: 2432, east: 2560, north: 6528, south: 6335, },
     {name: 'Yanille part cutscene', west: 2880, east: 2944, north: 4789, south: 4672, },
+    {name: '[[Mort\'ton]]', west: 2625, east: 2687, north: 5044, south: 4988, mapId: '28'},
 
 ];
 const template = `{{ObjectLocLine
