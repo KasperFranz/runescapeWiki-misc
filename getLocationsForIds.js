@@ -5,7 +5,7 @@ const localDataLocation = '../rs3cache/output'
 
 // Example usage
 const ids = [
-    [22945]
+    [118141]
 ];
 const useTemplate2 = true;
 const defaultmember = true;
@@ -26,7 +26,7 @@ const locations = [
     {name: '[[The beach]]', west: 3140, east: 3193, north: 3260, south: 3203, mapId: '28'},
     {name: '[[Het\'s Oasis]]', west: 3312, east: 3409, north: 3280, south: 3203, mapId: '28'},
     {name: '[[Al Kharid]]', west: 3266, east: 3334, north: 3269, south: 3133, mapId: '28'},
-    {name: '[[Fort Forinthry]]', west: 3273, east: 3337, north: 3578, south: 3530, mapId: '-28'},
+    {name: '[[Fort Forinthry]]', west: 3273, east: 3337, north: 3578, south: 3530, mapId: '28'},
     {name: '[[Wizards\' Tower]]', west: 3065, east: 3136, north: 3196, south: 3123, mapId: '28'},
     {name: '[[Armadyl\'s Tower]]', west: 2980, east: 3000, north: 3276, south: 3254, mapId: '28'},
     {name: '[[Void Knights\' Outpost]]', west: 2595, east: 2711, north: 2689, south: 2532, mapId: '28'},
@@ -61,7 +61,7 @@ const locations = [
     {name: '[[Blooming Burrow]]', west: 3712, east: 3904, north: 5056, south: 4864, mapId: '747', member: false},
     {name: '[[Harvest Hollow]]', west: 460, east: 831, north: 1850, south: 1600, mapId: '752', member: false},
     {name: '[[Burthorpe]]', west: 2868, east: 2945, north: 3574, south: 3495, mapId: '28', member: false},
-    {name: '[[Iron Enclave]]', west: 2240, east: 2367, north: 2751, south: 2624, mapId: '-1'},
+    {name: '[[Iron Enclave]]', west: 2240, east: 2367, north: 2751, south: 2624, mapId: '-1',member: false},
     {name: '[[Lumbridge]]', west: 3191, east: 3264, north: 3280, south: 3200, mapId: '-1'},
     {name: '[[Ancient Cavern]]', west: 1713, east: 1798, north: 5374, south: 5277, mapId: '36'},
     {name: '[[Orthen Oubliette]]', west: 5696, east: 5824, north: 2880, south: 2816, mapId: '734'},
@@ -74,7 +74,7 @@ const locations = [
     {name: '[[Keldagrim rat pits]]', west: 1920, east: 1983, north: 4735, south: 4672, mapId: '191'},
     {name: 'Consortium meeting room', west: 1984, east: 2047, north: 4543, south: 4480, mapId: '248'},
     {name: '[[The Lost Grove]] during [[Twilight of the Gods]]', west: 1216, east: 1280, north: 5696, south: 5632, mapId: '-1'},
-    {name: '[[The Land of Snow\'s Christmas Village]]', west: 5120, east: 5311, north: 9855, south: 9728, mapId: '746'},
+    {name: '[[Christmas Village]]', west: 5120, east: 5311, north: 9855, south: 9728, mapId: '746', member: false},
     {name: '[[Shattered Worlds]]', west: 2944, east: 3456, north: 6656, south: 6400, mapId: '-1'},
     {name: '[[Shattered Worlds]]', west: 832, east: 960, north: 704, south: 640, mapId: '-1'},
     {name: '[[Burthorpe]] (Troll Warzone cutscene, historical)', west: 1088, east: 1157, north: 5957, south: 5888, mapId: '-1'},
@@ -110,6 +110,15 @@ const locations = [
     {name: '[[Ardougne Monastery]]', west: 2587, east: 2624, north: 3221, south: 3202, mapId: '28'},
     {name: 'Some house?', west: 2508, east: 2528, north: 3439, south: 3423, mapId: '-1'},
     {name: 'West of [[Varrock]]', west: 3111, east: 3119, north: 3455, south: 3448, mapId: '-1', member: false},
+    {name: '[[Dragontooth Island]]', west: 3772, east: 3843, north: 3584, south: 3519, mapId: '28'},
+    {name: '[[Hazelmere\'s island]]', west: 2632, east: 2705, north: 3118, south: 3072, mapId: '28'},
+    {name: '[[War\'s Retreat]]', west: 3200, east: 3328, north: 10176 , south: 10112, mapId: '10003'},
+    {name: '[[Barrows]]', west: 3520, east: 3584, north: 9728, south: 9664, mapId: '527'},
+    {name: '[[Golden egg cave]]', west: 3840, east: 3904, north: 5120, south: 5056, mapId: '-1'},
+    {name: '[Memorial to Guthix]]', west: 2250, east: 2320, north: 3572, south: 3539, mapId: '28'},
+    {name: '[[]]', west: 2622, east: 2688, north: 12672, south: 12608, mapId: '-1'},
+    {name: '[[]]', west: null, east: null, north: null, south: null, mapId: '-1'},
+    {name: '[[]]', west: null, east: null, north: null, south: null, mapId: '-1'},
     {name: '[[]]', west: null, east: null, north: null, south: null, mapId: '-1'},
 ];
 
@@ -136,7 +145,13 @@ const ignoredLocations = [
     {name: 'Annarkarl cutscene', west: 4288, east: 4352, north: 5760, south: 5696, },
     {name: 'Varrock part cutscene', west: 2432, east: 2560, north: 6528, south: 6335, },
     {name: 'Yanille part cutscene', west: 2880, east: 2944, north: 4789, south: 4672, },
+    {name: 'Yanille part cutscene', west: 2880, east: 2944, north: 4789, south: 4672, },
     {name: '[[Mort\'ton]]', west: 2625, east: 2687, north: 5044, south: 4988, mapId: '28'},
+    {name: 'Boat cutscene - Stolen hearts', west: 1280, east: 1408, north: 4928, south: 4800, mapId: '-1'},
+    {name: 'Yanille - submarine', west: 3584, east: 3648, north: 5824, south: 5760, mapId: '-1'},
+    {name: 'Karamja copy', west: 2496, east: 2560, north: 4608, south: 4544, mapId: '-1'},
+    {name: 'Draynor village destroyed', west: 3840, east: 3904, north: 5504, south: 5440, mapId: '-1'},
+    {name: 'Drill demon randon event', west: 3136, east: 3200, north: 4864, south: 4800, mapId: '-1'},
 
 ];
 const template = `{{ObjectLocLine
@@ -428,5 +443,5 @@ async function getLocalMapData() {
 
 async function getBounds(mapId){
     let data = await getLocalMapData();
-    return data .find(x => x.id == mapId).bounds;
+    return data.find(x => x.id == mapId)?.bounds;
 }
