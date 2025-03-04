@@ -308,10 +308,22 @@ getVideoDetails('vPeTL2hC_h4') // 8 july
 
 //getVideoDetails('Z2xe2_odnrc')
 
-//getShortDetails('aJcitSnLWZA')
-//getVideoDetails('qVWnnT3FODE')
-//getVideoDetails('q0Dk9zhXCT4')
-
-//getVideoDetails('Z0QjXTYTnE4')
+//getShortDetails('ewhRt2cUukY')
+//getShortDetails('qVWnnT3FODE')
+// getShortDetails('q0Dk9zhXCT4')
+//getShortDetails('Wn7dIlDREkI')
+//getShortDetails('Z0QjXTYTnE4')
 
 //getVideoDetails('vX7qNzmqJAo')
+
+
+//getShortDetails('Q7wUF-JzcAY')
+//getShortDetails('Q8DXhXIAxoc')
+//getShortDetails('QINmbbJrPDM')
+//getShortDetails('1uPioojH9tg')
+//getShortDetails('p-Z3yoyg6ZE')
+//getShortDetails('uOHl0zhGVTw')
+//getShortDetails('7BZBQVoNN2w')
+//getShortDetails('T-xASvqTry8')
+//getShortDetails('uNQW1Xy1RIk')
+// getShortDetails('iSXJUNJHDR4')
