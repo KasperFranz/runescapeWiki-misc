@@ -5,7 +5,7 @@ const localDataLocation = '../rs3cache/output'
 
 // Example usage
 const ids = [
-    [118141]
+    [132386],[132389],[132392],[132395],[132396],[132399],
 ];
 const useTemplate2 = true;
 const defaultmember = true;
@@ -116,8 +116,8 @@ const locations = [
     {name: '[[Barrows]]', west: 3520, east: 3584, north: 9728, south: 9664, mapId: '527'},
     {name: '[[Golden egg cave]]', west: 3840, east: 3904, north: 5120, south: 5056, mapId: '-1'},
     {name: '[Memorial to Guthix]]', west: 2250, east: 2320, north: 3572, south: 3539, mapId: '28'},
-    {name: '[[]]', west: 2622, east: 2688, north: 12672, south: 12608, mapId: '-1'},
-    {name: '[[]]', west: null, east: null, north: null, south: null, mapId: '-1'},
+    {name: '[[Tarddiad]]', west: 2622, east: 2688, north: 12672, south: 12608, mapId: '-1'},
+    {name: '[[Time Rune Temple]]', west: 3584, east: 3647, north: 4927, south: 4864, mapId: '755'},
     {name: '[[]]', west: null, east: null, north: null, south: null, mapId: '-1'},
     {name: '[[]]', west: null, east: null, north: null, south: null, mapId: '-1'},
 ];
