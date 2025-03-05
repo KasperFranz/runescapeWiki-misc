@@ -3,10 +3,8 @@ const { type } = require('node:os');
 
 const localDataLocation = '../rs3cache/output'
 
-// Example usage
-const ids = [
-    [132386],[132389],[132392],[132395],[132396],[132399],
-];
+const ids = process.argv.slice(2).map((value) =>  [value.split(',')]);
+
 const useTemplate2 = true;
 const defaultmember = true;
 const goOnline = false;
