@@ -17,7 +17,7 @@ const template = `{{Needs dialogue}}
 {{Infobox Media
 |name = {{YT.CLEANTITLE}}
 |image = {{YT.IMAGE}}
-|uploader = RuneScape
+|uploader = {{YT.UPLOADER}}
 |date = {{YT.DATE}}
 |type = video
 |category = {{YT.CATEGORY}}
@@ -233,6 +233,7 @@ async function printVideoDetails(data,type) {
         .replaceAll('{{YT.DURATION}}', data.snippet.duration)
         .replaceAll('{{YT.CATEGORY}}', category)
         .replaceAll('{{YT.SUBJECT}}', formatSubject(category, data.snippet))
+        .replaceAll('{{YT.UPLOADER}}', data.snippet.channelTitle)
         .replaceAll('{{YT.PARTICIPANTS}}', getParticipants(category, data.snippet));
 
     fs.writeFile('output/video/' + formatName(data.snippet.title) + '.md', output, err => {
@@ -346,3 +347,5 @@ getVideoDetails('vPeTL2hC_h4') // 8 july
 //getShortDetails('sRY3ib5H7h8')
 //getShortDetails('DjAXRQ_2Zr0')
 //getShortDetails('aev6JICFpXw')
+
+getShortDetails('QGiseMkL5Cc')
