@@ -248,8 +248,22 @@ async function printVideoDetails(data,type) {
     const {body} = await fetch(getVideoLink(data.snippet.thumbnails));
     await finished(Readable.fromWeb(body).pipe(stream));
 
-    console.log(encodeURI(`https://runescape.wiki/w/{{RSWIKI.LINK}}?action=edit`.replaceAll('{{RSWIKI.LINK}}', formatImageName(data.snippet.title).replace('.jpg', '').replaceAll(' ', '_'))))
-    console.log(encodeURI(`https://runescape.wiki/w/Special:Upload?wpDestFile={{IMAGE}}&wpUploadDescription={{IMAGE_DESC}}`.replaceAll('{{IMAGE}}', imageName.replaceAll(' ', '_')).replaceAll('{{IMAGE_DESC}}',IMAGEDESCRIPTION).replaceAll('{{YT.LINK}}',ytLink)))
+    const wikiLink = getWikiLink(data.snippet.channelTitle)
+    console.log(encodeURI(`{{RSWIKILINK}}/{{RSWIKI.LINK}}?action=edit`.replaceAll('{{RSWIKI.LINK}}', formatImageName(data.snippet.title)).replace('.jpg', '').replaceAll(' ', '_').replaceAll('{{RSWIKILINK}}',wikiLink)))
+    console.log(encodeURI(`{{RSWIKILINK}}/Special:Upload?wpDestFile={{IMAGE}}&wpUploadDescription={{IMAGE_DESC}}`.replaceAll('{{IMAGE}}', imageName.replaceAll(' ', '_')).replaceAll('{{IMAGE_DESC}}',IMAGEDESCRIPTION).replaceAll('{{YT.LINK}}',ytLink).replaceAll('{{RSWIKILINK}}',wikiLink)))
+}
+
+function getWikiLink(channelTitle){
+    switch(channelTitle){
+        case 'RuneScape: Dragonwilds':
+            return 'https://dragonwilds.runescape.wiki/'
+
+        case 'RuneScape':
+            return 'https://runescape.wiki/w/'
+        default:
+            console.log('Defaulting to runescape Wiki')
+            return 'https://runescape.wiki/w/'
+    }
 }
 
 
@@ -348,4 +362,6 @@ getVideoDetails('vPeTL2hC_h4') // 8 july
 //getShortDetails('DjAXRQ_2Zr0')
 //getShortDetails('aev6JICFpXw')
 
-getShortDetails('QGiseMkL5Cc')
+//getShortDetails('QGiseMkL5Cc')
+
+getVideoDetails('30mkN1Hw83Q')
