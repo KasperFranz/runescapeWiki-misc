@@ -13,7 +13,7 @@ const IMAGEDESCRIPTION = `== Summary ==
 [[Category:Media thumbnails]]
 `
 // noinspection UnnecessaryLabelJS JSAnnotator
-const template = `{{Needs dialogue}}
+const template = `{{PRE}}{{Needs dialogue}}
 {{Infobox Media
 |name = {{YT.CLEANTITLE}}
 |image = {{YT.IMAGE}}
@@ -26,15 +26,12 @@ const template = `{{Needs dialogue}}
 |duration = {{YT.DURATION}}
 |youtube = {{YT.LINK}}
 }}
-'''{{YT.TITLE}}''' was a [[video]] that was released on {{YT.DATE}}.
+'''{{YT.TITLE}}''' is a [[video]] released on {{YT.DATE}}.
 
 ==Description==
 <blockquote>
 {{YT.DESCRIPTION}}
-</blockquote>
-
-{{DISPLAYTITLE:{{YT.CLEANTITLE}}}}
-{{Restricted title|Cannot use pipe in titles}}`;
+</blockquote>{{EXTRA}}`;
 
 function getShortDetails(videoId){
     return getDetails(videoId, 'short')
@@ -97,7 +94,26 @@ function formatCategory(title,type) {
 }
 
 function formatName(title) {
-    return title.replaceAll('|', '{{!}}');
+    const formattedName = title.replaceAll('|', '{{!}}');
+    let extra = '';
+    let pre ='';
+    if(title.includes('#') && title.includes('|')){
+        extra =  "\n\n{{Restricted title|Cannot use pipe and # in titles}}";
+    } else if(title.includes('|')){
+        extra =  "\n\n{{Restricted title|Cannot use pipe in titles}}";
+    } else if(title.includes('#')){
+        extra =  "\n\n{{Restricted title|Cannot use # in titles}}";
+    }
+
+    if(extra.length> 0 ){
+        pre = "{{DISPLAYTITLE:"+formattedName+"}}\n"
+    }
+
+    return {
+        pre,
+        extra: extra,
+        formattedName,
+    };
 }
 
 function formatImageName(title) {
@@ -222,8 +238,9 @@ async function printVideoDetails(data,type) {
     //console.log(data)
     const imageName = formatImageName(data.snippet.title)
     const ytLink = generateLink(data.id,type);
+    const {pre, extra, formattedName} = formatName(data.snippet.title)
     const output = template
-        .replaceAll('{{YT.CLEANTITLE}}', formatName(data.snippet.title))
+        .replaceAll('{{YT.CLEANTITLE}}', formattedName)
         .replaceAll('{{YT.TITLE}}', data.snippet.title)
         .replaceAll('{{YT.IMAGE}}', imageName)
         .replaceAll('{{YT.DATE}}', formatDate(data.snippet.publishedAt))
@@ -234,9 +251,11 @@ async function printVideoDetails(data,type) {
         .replaceAll('{{YT.CATEGORY}}', category)
         .replaceAll('{{YT.SUBJECT}}', formatSubject(category, data.snippet))
         .replaceAll('{{YT.UPLOADER}}', data.snippet.channelTitle)
-        .replaceAll('{{YT.PARTICIPANTS}}', getParticipants(category, data.snippet));
+        .replaceAll('{{YT.PARTICIPANTS}}', getParticipants(category, data.snippet))
+        .replaceAll('{{PRE}}', pre)
+        .replaceAll('{{EXTRA}}', extra);
 
-    fs.writeFile('output/video/' + formatName(data.snippet.title) + '.md', output, err => {
+    fs.writeFile('output/video/' + formattedName + '.md', output, err => {
         if (err) {
             console.error(err);
         }
@@ -371,3 +390,17 @@ getVideoDetails('vPeTL2hC_h4') // 8 july
 
 //getVideoDetails('GhBZpyF9kFg')
 //getShortDetails('gKQ5skgtJ7U')
+
+//getShortDetails('qUGOT82J7-Q')
+//getShortDetails('YweEtn-sACg')
+//getVideoDetails('fKbDppvNONg')
+//getVideoDetails('2U_D-_ygxaU')
+//getShortDetails('K20Y6Akhhto')
+
+//getVideoDetails('RPDTObOxOxg')
+
+//getShortDetails('LoBPd_ryuw4')
+//getShortDetails('09rh5tJ7Vf4')
+//getShortDetails('6sQFbcXvc2Y')
+
+getVideoDetails('gYZljbrvsm0')
