@@ -3,9 +3,8 @@ const { type } = require('node:os');
 
 const localDataLocation = '../rs3cache/output'
 
-const ids = process.argv.slice(2).map((value) =>  [value.split(',')]);
-
-const useTemplate2 = true;
+const ids = process.argv.slice(2).map((value) =>  value.split(','));
+const useTemplate2 = false;
 const defaultmember = true;
 const goOnline = false;
 
@@ -47,6 +46,7 @@ const locations = [
     {name: '[[Menaphos Imperial district]]', west: 3048, east: 3179, north: 2770, south: 2674, mapId: '28'},
     {name: '[[Menaphos Merchant district]]', west: 3176, east: 3254, north: 2816, south: 2747, mapId: '28'},
     {name: '[[Menaphos Worker district]]', west: 3131, east: 3176, north: 2825, south: 2770, mapId: '28'},
+    {name: '[[Menaphos Port district]]', west: 3117, east: 3245, north: 2681, south: 2611, mapId: '28'},
     {name: '[[Rock Island Prison]]', west: 3015, east: 3062, north: 2997, south: 2958, mapId: '28'},
     {name: '[[Menaphos]]', west: 3076, east: 3263, north: 2819, south: 2606, mapId: '28'},
     {name: '[[Scabarite Cavern]]', west: 3264, east: 3327, north: 7615, south: 7552, mapId: '753'},
@@ -103,7 +103,7 @@ const locations = [
     {name: '[[Fight Arena (location)|Fight Arena]]', west: 2559, east: 2626, north: 3199, south: 3136, mapId: '28'},
     {name: '[[Silvarea]]', west: 3334, east: 3403, north: 3533, south: 3490, mapId: '28'},
     {name: '[[Seers\' Village]]', west: 2688, east: 2742, north: 3510, south: 3455, mapId: '28'},
-    {name: 'House west of [[McGrubor\'s Wood]]', west: 2608, east: 2618, north: 3482, south: 3472, mapId: '28'},
+    {name: '[[Galahad]]\'s house', west: 2608, east: 2618, north: 3482, south: 3472, mapId: '28'},
     {name: '[[Clock Tower (building)|Clock Tower]]', west: 2563, east: 2577, north: 3256, south: 3232, mapId: '28'},
     {name: '[[Ardougne Monastery]]', west: 2587, east: 2624, north: 3221, south: 3202, mapId: '28'},
     {name: 'Some house?', west: 2508, east: 2528, north: 3439, south: 3423, mapId: '-1'},
@@ -116,6 +116,15 @@ const locations = [
     {name: '[Memorial to Guthix]]', west: 2250, east: 2320, north: 3572, south: 3539, mapId: '28'},
     {name: '[[Tarddiad]]', west: 2622, east: 2688, north: 12672, south: 12608, mapId: '-1'},
     {name: '[[Time Rune Temple]]', west: 3584, east: 3647, north: 4927, south: 4864, mapId: '755'},
+    {name: '[[Crafting Guild]]', west: 2913, east: 2944, north: 3293, south: 3267, mapId: '28', member: false},
+    {name: '[[Makeover Mage]]\'s house', west: 2914, east: 2922, north: 3325, south: 3318, mapId: '28', member: false},
+    {name: '[[Golden palace]]', west: 2112, east: 2176, north: 6976, south: 6912, mapId: '-1'},
+    {name: '[[Underground Pass (dungeon)|Iban\'s Lair]]', west: 2112, east: 4544, north: 4735, south: 4544, mapId: '209'},
+    {name: '[[Piscatoris south mine]]', west: 2320, east: 2346, north: 3649, south: 3636, mapId: '28'},
+    {name: '[[Uzer mine]]', west: 3456, east: 3468, north: 3143, south: 3134, mapId: '28'},
+    {name: '[[Garden of Kharid]]', west: 3309, east: 3340, north: 3324, south: 3287, mapId: '28', member: false},
+    {name: '[[]]', west: null, east: null, north: null, south: null, mapId: '-1'},
+    {name: '[[]]', west: null, east: null, north: null, south: null, mapId: '-1'},
     {name: '[[]]', west: null, east: null, north: null, south: null, mapId: '-1'},
     {name: '[[]]', west: null, east: null, north: null, south: null, mapId: '-1'},
 ];
@@ -152,14 +161,9 @@ const ignoredLocations = [
     {name: 'Drill demon randon event', west: 3136, east: 3200, north: 4864, south: 4800, mapId: '-1'},
 
 ];
-const template = `{{ObjectLocLine
-|name = {{NAME}}
-|loc = {{LOCATION}}{{FLOOR}}{{MEMBER}}
-{{LOCATIONS}}
-|mapID = {{MAPID}}{{PLANE}}
-}}`;
+const template = `{{ObjectLocLine|name={{NAME}}|loc={{LOCATION}}{{FLOOR}}{{MEMBER}}{{LOCATIONS}}|mapID={{MAPID}}{{PLANE}}}}`;
 
-const template2 = `|map = {{Object map|mapID={{MAPID}}{{PLANE}}|objectid={{OBJECTID}}{{LOCATIONS}}}}`
+const template2 = `|map={{Object map|mapID={{MAPID}}{{PLANE}}|objectid={{OBJECTID}}{{LOCATIONS}}}}`
 if(typeof ids[0] == 'object'){
     for(let id of ids){
         handleGroup(id)
@@ -332,10 +336,9 @@ async function getIDsAndCoords(ids) {
             let fakePlane = plane.indexOf('-fake') > -1
             plane = plane.replace('-fake','');
             const floorString = plane > 0 ? " ({{FloorNumber|" + ((+plane) + 1) + "}})" : ''
-            const planeString = !fakePlane && plane > 0 ? "\n|plane=" + plane : ''
+            const planeString = !fakePlane && plane > 0 ? "|plane=" + plane : ''
             if (!useTemplate2) {
-                const memberText = member == 1 ? `
-|mem = Yes` : '';
+                const memberText = member == 1 ? `|mem = Yes` : '';
                 results.push(
                     template.replaceAll('{{LOCATIONS}}', formatData(locationData,ids.length > 1).toString().replaceAll(",|", "|"))
                         .replaceAll('{{LOCATION}}', locationName)

@@ -117,7 +117,7 @@ function formatName(title) {
 }
 
 function formatImageName(title) {
-    return title.replaceAll('|', '-').replaceAll('#', '').replaceAll('!','').replaceAll('&','').replaceAll('  ',' ').replaceAll('?','-').replaceAll(':', '-')+ '.jpg';
+    return title.replaceAll('|', '-').replaceAll('#', '').replaceAll('!','').replaceAll('&','').replaceAll('  ',' ').replaceAll('?','-')+ '.jpg';
 }
 
 function formatSubject(category, snippet) {
@@ -403,4 +403,4 @@ getVideoDetails('vPeTL2hC_h4') // 8 july
 //getShortDetails('09rh5tJ7Vf4')
 //getShortDetails('6sQFbcXvc2Y')
 
-getVideoDetails('gYZljbrvsm0')
+getVideoDetails('RPDTObOxOxg')
