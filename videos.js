@@ -117,7 +117,7 @@ function formatName(title) {
 }
 
 function formatImageName(title) {
-    return title.replaceAll('|', '-').replaceAll('#', '').replaceAll('!','').replaceAll('&','').replaceAll('  ',' ').replaceAll('?','-')+ '.jpg';
+    return title.replaceAll('|', '-').replaceAll('#', '').replaceAll('!','').replaceAll('&','').replaceAll('  ',' ').replaceAll('?','-').replaceAll(':','')+ '.jpg';
 }
 
 function formatSubject(category, snippet) {
@@ -268,7 +268,7 @@ async function printVideoDetails(data,type) {
     await finished(Readable.fromWeb(body).pipe(stream));
 
     const wikiLink = getWikiLink(data.snippet.channelTitle)
-    console.log(encodeURI(`{{RSWIKILINK}}/{{RSWIKI.LINK}}?action=edit`.replaceAll('{{RSWIKI.LINK}}', formatImageName(data.snippet.title)).replace('.jpg', '').replaceAll(' ', '_').replaceAll('{{RSWIKILINK}}',wikiLink)))
+    console.log(encodeURI(`{{RSWIKILINK}}/{{RSWIKI.LINK}}?action=edit`.replaceAll('{{RSWIKI.LINK}}', formattedName.replaceAll(' ', '_')).replaceAll('{{RSWIKILINK}}',wikiLink)))
     console.log(encodeURI(`{{RSWIKILINK}}/Special:Upload?wpDestFile={{IMAGE}}&wpUploadDescription={{IMAGE_DESC}}`.replaceAll('{{IMAGE}}', imageName.replaceAll(' ', '_')).replaceAll('{{IMAGE_DESC}}',IMAGEDESCRIPTION).replaceAll('{{YT.LINK}}',ytLink).replaceAll('{{RSWIKILINK}}',wikiLink)))
 }
 
@@ -403,4 +403,6 @@ getVideoDetails('vPeTL2hC_h4') // 8 july
 //getShortDetails('09rh5tJ7Vf4')
 //getShortDetails('6sQFbcXvc2Y')
 
-getVideoDetails('RPDTObOxOxg')
+//getVideoDetails('RPDTObOxOxg')
+
+getVideoDetails('qWbIXekZocI')
