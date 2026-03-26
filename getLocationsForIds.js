@@ -4,7 +4,7 @@ const { type } = require('node:os');
 const localDataLocation = '../rs3cache/output'
 
 const ids = process.argv.slice(2).map((value) =>  value.split(','));
-const useTemplate2 = false;
+const outputFormat = 3;
 const defaultmember = true;
 const goOnline = false;
 
@@ -179,6 +179,31 @@ const ignoredLocations = [
 const template = `{{ObjectLocLine|name={{NAME}}|loc={{LOCATION}}{{FLOOR}}{{MEMBER}}{{LOCATIONS}}|mapID={{MAPID}}{{PLANE}}}}`;
 
 const template2 = `|map={{Object map|mapID={{MAPID}}{{PLANE}}|objectid={{OBJECTID}}{{LOCATIONS}}}}`
+
+function formatLocationPins(data, multipleIds) {
+    let resultsTable = [];
+    for (let i = 0; i < data.length; i++) {
+        let tempValue = `|{OBJECTID}x: ${(data[i].i * 64 + data[i].x)}, y: ${(data[i].j * 64 + data[i].y)}`;
+        tempValue = tempValue.replace('{OBJECTID}', multipleIds ? `objectid:${data[i].id},` : '')
+        resultsTable.push(tempValue);
+    }
+    return resultsTable;
+}
+
+function formatTableRow(locationName, member, locationData) {
+    const memberText = member == 1 ? 'yes' : 'no';
+    const pins = formatLocationPins(locationData, false);
+
+    return [
+        '|-',
+        `| ${locationName}`,
+        `| {{Members|${memberText}}}`,
+        `| {{Maplink|mtype=pin|text=${locationData.length}`,
+        ...pins,
+        '}}',
+        '| {{NA}}',
+    ].join('\n');
+}
 if(typeof ids[0] == 'object'){
     for(let id of ids){
         handleGroup(id)
@@ -204,19 +229,6 @@ async function handleGroup(ids){
             console.error('Error:', error);
         });
 
-}
-
-function formatData(data,multipleIds) {
-
-    let resultsTable = [];
-    for (let i = 0; i < data.length; i++) {
-
-        let tempValue = `|{OBJECTID}x:${(data[i].i * 64 + data[i].x)},y:${(data[i].j * 64 + data[i].y)}`;
-        //{{Object map|mapID=-1|1494,5227|1502,5222|group}
-        tempValue = tempValue.replace('{OBJECTID}',multipleIds ? `objectid:${data[i].id},` : '')
-        resultsTable.push(tempValue);
-    }
-    return resultsTable;
 }
 
 async function getRemoteData(id) {
@@ -341,7 +353,7 @@ async function getIDsAndCoords(ids) {
     }
 
 
-    if (!useTemplate2 && Object.entries(tempData).length > 0) {
+    if (outputFormat === 1 && Object.entries(tempData).length > 0) {
         results.push('{{ObjectTableHead}}')
     }
 
@@ -352,10 +364,10 @@ async function getIDsAndCoords(ids) {
             plane = plane.replace('-fake','');
             const floorString = plane > 0 ? " ({{FloorNumber|" + ((+plane) + 1) + "}})" : ''
             const planeString = !fakePlane && plane > 0 ? "|plane=" + plane : ''
-            if (!useTemplate2) {
+            if (outputFormat === 1) {
                 const memberText = member == 1 ? `|mem = Yes` : '';
                 results.push(
-                    template.replaceAll('{{LOCATIONS}}', formatData(locationData,ids.length > 1).toString().replaceAll(",|", "|"))
+                    template.replaceAll('{{LOCATIONS}}', formatLocationPins(locationData, ids.length > 1).toString().replaceAll(",|", "|"))
                         .replaceAll('{{LOCATION}}', locationName)
                         .replaceAll('{{MAPID}}', mapId)
                         .replaceAll('{{FLOOR}}', floorString)
@@ -366,8 +378,9 @@ async function getIDsAndCoords(ids) {
                 )
                 continue;
             }
+            if (outputFormat === 2) {
             results.push(
-                template2.replaceAll('{{LOCATIONS}}', formatData(locationData,ids.length > 1).toString().replaceAll(",|", "|"))
+                template2.replaceAll('{{LOCATIONS}}', formatLocationPins(locationData, ids.length > 1).toString().replaceAll(",|", "|"))
                     .replaceAll('{{LOCATION}}', locationName)
                     .replaceAll('{{MAPID}}', mapId)
                     .replaceAll('{{OBJECTID}}', locationData[0].id)
@@ -375,9 +388,14 @@ async function getIDsAndCoords(ids) {
                     .replaceAll('{{NAME}}', sceneryName)
                     .replaceAll('{{PLANE}}', planeString)
             )
+                continue;
+            }
+            if (outputFormat === 3) {
+                results.push(formatTableRow(locationName, member, locationData))
+            }
         }
     }
-    if (!useTemplate2 && results.length > 0) {
+    if (outputFormat === 1 && results.length > 0) {
         results.push('{{ObjectTableBottom}}');
     }
 
