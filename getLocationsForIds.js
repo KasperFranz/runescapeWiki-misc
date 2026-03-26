@@ -42,6 +42,7 @@ const locations = [
     {name: '[[Rex Matriarch lair]]', west: 3968, east: 4096, north: 9856, south: 9728, mapId: '749'},
     {name: '[[Rex Matriarch lair]]', west: 3840, east: 3968, north: 9920, south: 9793, mapId: '750'},
     {name: '[[Anachronia]]', west: 5248, east: 5760, north: 2626, south: 2047, mapId: '28'},
+    {name: '[[Havenhythe]]', west: 3327, east: 3776, north: 1855, south: 1279, mapId: '28'},
     {name: '[[Sophanem]]', west: 3266, east: 3323, north: 2807, south: 2631, mapId: '28'},
     {name: '[[Menaphos Imperial district]]', west: 3048, east: 3179, north: 2770, south: 2674, mapId: '28'},
     {name: '[[Menaphos Merchant district]]', west: 3176, east: 3254, north: 2816, south: 2747, mapId: '28'},
@@ -67,6 +68,7 @@ const locations = [
     {name: '[[God Wars Dungeon]]', west: 2816, east: 2944, north: 5376, south: 5238, mapId: '15'},
     {name: '[[Ancient Prison]]', west: 2816, east: 2944, north: 5239, south: 5184, mapId: '15'},
     {name: '[[Dorgesh-Kaan]]', west: 2688, east: 2752, north: 5376, south: 5248, mapId: '26'},
+    {name: '[[Dorgesh-Kaan mine]]', west: 3309, east: 3328, north: 9664, south: 9600, mapId: '607'},
     {name: '[[Red Axe base|Hreidmar\'s palace]]', west: 1792, east: 1856, north: 6272, south: 6208, mapId: '-1'},
     {name: '[[Keldagrim]]', west: 2816, east: 2943, north: 10304, south: 10112, mapId: '21'},
     {name: '[[Keldagrim rat pits]]', west: 1920, east: 1983, north: 4735, south: 4672, mapId: '191'},
@@ -107,7 +109,8 @@ const locations = [
     {name: '[[Clock Tower (building)|Clock Tower]]', west: 2563, east: 2577, north: 3256, south: 3232, mapId: '28'},
     {name: '[[Ardougne Monastery]]', west: 2587, east: 2624, north: 3221, south: 3202, mapId: '28'},
     {name: 'Some house?', west: 2508, east: 2528, north: 3439, south: 3423, mapId: '-1'},
-    {name: 'West of [[Varrock]]', west: 3111, east: 3119, north: 3455, south: 3448, mapId: '-1', member: false},
+    {name: 'West of [[Varrock]]', west: 3111, east: 3119, north: 3455, south: 3448, mapId: '28', member: false},
+    {name: '[[Varrock]]', west: 3173, east: 3291, north: 3465, south: 3375, mapId: '28', member: false},
     {name: '[[Dragontooth Island]]', west: 3772, east: 3843, north: 3584, south: 3519, mapId: '28'},
     {name: '[[Hazelmere\'s island]]', west: 2632, east: 2705, north: 3118, south: 3072, mapId: '28'},
     {name: '[[War\'s Retreat]]', west: 3200, east: 3328, north: 10176 , south: 10112, mapId: '10003'},
@@ -123,8 +126,13 @@ const locations = [
     {name: '[[Piscatoris south mine]]', west: 2320, east: 2346, north: 3649, south: 3636, mapId: '28'},
     {name: '[[Uzer mine]]', west: 3456, east: 3468, north: 3143, south: 3134, mapId: '28'},
     {name: '[[Garden of Kharid]]', west: 3309, east: 3340, north: 3324, south: 3287, mapId: '28', member: false},
-    {name: '[[]]', west: null, east: null, north: null, south: null, mapId: '-1'},
-    {name: '[[]]', west: null, east: null, north: null, south: null, mapId: '-1'},
+    {name: '[[Thieves\' Guild]]', west: 4736, east: 4799, north: 5823, south: 5760, mapId: '184'},
+    {name: '[[Highweald Ruins]]', west: 3456, east: 3520, north: 8128, south: 8064, mapId: '764'},
+    {name: '[[Arandar Pass mine]]', west: 2304, east: 2336, north: 3282, south: 3263, mapId: '28'},
+    {name: '[[Lumbridge south-west mine]]', west: 3136, east: 3157, north: 3155, south: 3136, mapId: '28'},
+    {name: '[[Lumbridge south-east mine]]', west: 3220, east: 3239, north: 3156, south: 3143, mapId: '28'},
+    {name: '[[Legends\' Guild south-west mine]]', west: 2688, east: 2717, north: 3340, south: 3328, mapId: '28'},
+    {name: '[[Crafting Guild Mine]]', west: 2880, east: 2943, north: 6463, south: 6400, mapId: '761'},
     {name: '[[]]', west: null, east: null, north: null, south: null, mapId: '-1'},
     {name: '[[]]', west: null, east: null, north: null, south: null, mapId: '-1'},
 ];
@@ -159,7 +167,14 @@ const ignoredLocations = [
     {name: 'Karamja copy', west: 2496, east: 2560, north: 4608, south: 4544, mapId: '-1'},
     {name: 'Draynor village destroyed', west: 3840, east: 3904, north: 5504, south: 5440, mapId: '-1'},
     {name: 'Drill demon randon event', west: 3136, east: 3200, north: 4864, south: 4800, mapId: '-1'},
-
+    {name: 'Thieving Guild 1', west: 4608, south: 5936, east: 4623, north: 5951, mapId: '-1'},
+    {name: 'Thieving Guild 1', west: 4656, south: 5888, east: 4671, north: 5903, mapId: '-1'},
+    {name: 'Thieving Guild 2', west: 4736, south: 5888, east: 4799, north: 5951, mapId: '-1'},
+    {name: 'Thieving Guild 3', west: 4608, south: 5760, east: 4671, north: 5823, mapId: '-1'},
+    {name: 'Mininig and Smithing rework test square', west: 2816, south: 1600, east: 2880, north: 1664, mapId: '-1'},
+    {name: '', west: null, south: null, east: null, north: null, mapId: '-1'},
+    {name: '', west: null, south: null, east: null, north: null, mapId: '-1'},
+    {name: '', west: null, south: null, east: null, north: null, mapId: '-1'},
 ];
 const template = `{{ObjectLocLine|name={{NAME}}|loc={{LOCATION}}{{FLOOR}}{{MEMBER}}{{LOCATIONS}}|mapID={{MAPID}}{{PLANE}}}}`;
 
@@ -390,8 +405,12 @@ function compareItems(a, b) {
 async function updateItemBasedOnLocation(item, location){
     if(location.name === '[[Anachronia]]'){
         //Coordinates for Anachronia are offset by (-23*64,31*64).
-        item.j = item.j+31
         item.i = item.i-23
+        item.j = item.j+31
+    } else if(location.name === '[[Havenhythe]]'){
+        //Coordinates for Havenhythe are offset by (11*64,28*64).
+        item.i = item.i+11
+        item.j = item.j+28
     }else if(location.mapId !== '-1') {
         let response = await transformBasedOnBounds(location, item, item.plane)
         if(!response.transformed && item.plane > 0){
