@@ -1,3 +1,9 @@
+const bufferModule = require("node:buffer");
+if (!bufferModule.SlowBuffer) {
+    // Node 25 removed SlowBuffer; older transitive deps still patch its prototype.
+    bufferModule.SlowBuffer = bufferModule.Buffer;
+}
+
 const {google} = require("googleapis");
 const {Duration} = require("luxon");
 const fs = require('node:fs');
@@ -408,4 +414,10 @@ getVideoDetails('vPeTL2hC_h4') // 8 july
 
 //getVideoDetails('qWbIXekZocI')
 
-getShortDetails('UacaRXTHq6I')
+//getShortDetails('UacaRXTHq6I')
+
+//getVideoDetails('fg5FDnHgoW8')
+//getVideoDetails('868h_s0Ekus')
+
+//getShortDetails('ImGYMK2pgL0')
+getShortDetails('qQSjl-O9WmE')
