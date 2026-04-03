@@ -42,7 +42,7 @@ const locations = [
     {name: '[[Rex Matriarch lair]]', west: 3968, east: 4096, north: 9856, south: 9728, mapId: '749'},
     {name: '[[Rex Matriarch lair]]', west: 3840, east: 3968, north: 9920, south: 9793, mapId: '750'},
     {name: '[[Anachronia]]', west: 5248, east: 5760, north: 2626, south: 2047, mapId: '28'},
-    {name: '[[Havenhythe]]', west: 3327, east: 3776, north: 1855, south: 1279, mapId: '28'},
+    {name: '[[Havenhythe]]', west: 3327, east: 3776, north: 1855, south: 1279, mapId: '28', requirement: '{{QuestIcon|Visions of Havenhythe}} (partial)', member: false},
     {name: '[[Sophanem]]', west: 3266, east: 3323, north: 2807, south: 2631, mapId: '28'},
     {name: '[[Menaphos Imperial district]]', west: 3048, east: 3179, north: 2770, south: 2674, mapId: '28'},
     {name: '[[Menaphos Merchant district]]', west: 3176, east: 3254, north: 2816, south: 2747, mapId: '28'},
@@ -64,7 +64,7 @@ const locations = [
     {name: '[[Lumbridge]]', west: 3191, east: 3264, north: 3280, south: 3200, mapId: '-1'},
     {name: '[[Ancient Cavern]]', west: 1713, east: 1798, north: 5374, south: 5277, mapId: '36'},
     {name: '[[Orthen Oubliette]]', west: 5696, east: 5824, north: 2880, south: 2816, mapId: '734'},
-    {name: '[[Lunar Isle]]', west: 2039, east: 2183, north: 3965, south: 3841, mapId: '-1'},
+    {name: '[[Lunar Isle]]', west: 2039, east: 2183, north: 3965, south: 3841, mapId: '-1', requirement: '{{QuestIcon|Lunar Diplomacy}} (partial)'},
     {name: '[[God Wars Dungeon]]', west: 2816, east: 2944, north: 5376, south: 5238, mapId: '15'},
     {name: '[[Ancient Prison]]', west: 2816, east: 2944, north: 5239, south: 5184, mapId: '15'},
     {name: '[[Dorgesh-Kaan]]', west: 2688, east: 2752, north: 5376, south: 5248, mapId: '26'},
@@ -85,7 +85,7 @@ const locations = [
     {name: '[[Iceberg]]', west: 2624, east: 2752, north: 4096, south: 3968, mapId: '28'},
     {name: '[[Enchanted Valley]]', west: 3008, east: 3071, north: 4543, south: 4480, mapId: '175'},
     {name: '[[Ape Atoll]]', west: 2688, east: 2816, north: 2816, south: 2688, mapId: '28'},
-    {name: '[[Isafdar]]', west: 2144, east: 2318, north: 3266, south: 3115, mapId: '28'},
+    {name: '[[Isafdar]]', west: 2144, east: 2318, north: 3266, south: 3115, mapId: '28', requirement: '{{QuestIcon|Regicide}} (partial)'},
     {name: '[[Water altar]]', west: 3456, east: 3520, north: 4864, south: 4800, mapId: '159'},
     {name: '[[Nature altar]]', west: 2368, east: 2431, north: 4863, south: 4800, mapId: '151'},
     {name: 'east of [[Draynor Village]]', west: 3131, east: 3161, north: 3293, south: 3249, mapId: '28', member: false},
@@ -116,7 +116,7 @@ const locations = [
     {name: '[[Hazelmere\'s island]]', west: 2632, east: 2705, north: 3118, south: 3072, mapId: '28'},
     {name: '[[War\'s Retreat]]', west: 3200, east: 3328, north: 10176 , south: 10112, mapId: '10003'},
     {name: '[[Barrows]]', west: 3520, east: 3584, north: 9728, south: 9664, mapId: '527'},
-    {name: '[[Golden egg cave]]', west: 3840, east: 3904, north: 5120, south: 5056, mapId: '-1'},
+    {name: '[[Fort Forinthry Grove Cave]]', west: 3840, east: 3904, north: 5120, south: 5056, mapId: '-1', member: false},
     {name: '[Memorial to Guthix]]', west: 2250, east: 2320, north: 3572, south: 3539, mapId: '28'},
     {name: '[[Tarddiad]]', west: 2622, east: 2688, north: 12672, south: 12608, mapId: '-1'},
     {name: '[[Time Rune Temple]]', west: 3584, east: 3647, north: 4927, south: 4864, mapId: '755'},
@@ -144,9 +144,9 @@ const locations = [
     {name: '[[Sinclair Mansion]]', west: 2688, east: 2761, north: 3598, south: 3520, mapId: '28'},
     {name: 'South of [[McGrubor\'s Wood]]', west: 2624, east: 2688, north: 3471, south: 3456, mapId: '28'},
     {name: 'West of the [[Fishing Guild]]', west: 2551, east: 2579, north: 3429, south: 3382, mapId: '28'},
-    {name: 'around the [[tree of Balance]]', west: 3295, east: 3337, north: 3356, south: 3327, mapId: '28'},
-    {name: '[[]]', west: null, east: null, north: null, south: null, mapId: '-1'},
-    {name: '[[]]', west: null, east: null, north: null, south: null, mapId: '-1'},
+    {name: 'around the [[tree of Balance]]', west: 3295, east: 3337, north: 3356, south: 3327, mapId: '28', member: false},
+    {name: '[[Rimmington]]', west: 2916, east: 2995, north: 3264, south: 3188, mapId: '28', member: false},
+    {name: '[[Grand Exchange]]', west: 3136, east: 3200, north: 3520, south: 3450, mapId: '28', member: false},
     {name: '[[]]', west: null, east: null, north: null, south: null, mapId: '-1'},
     {name: '[[]]', west: null, east: null, north: null, south: null, mapId: '-1'},
 ];
@@ -190,7 +190,7 @@ const ignoredLocations = [
     {name: 'grand_tree_copy', west: 2304, south: 5376, east: 2367, north: 5439, mapId: '281'},
     {name: 'Draynor Bank robbery', west: 2112, south: 4864, east: 2176, north: 4928, mapId: '-1'},
 ];
-const template = `{{ObjectLocLine|name={{NAME}}|loc={{LOCATION}}{{FLOOR}}{{MEMBER}}{{LOCATIONS}}|mapID={{MAPID}}{{PLANE}}}}`;
+const template = `{{ObjectLocLine|name={{NAME}}|loc={{LOCATION}}{{FLOOR}}{{MEMBER}}{{REQUIREMENT}}{{LOCATIONS}}|mapID={{MAPID}}{{PLANE}}}}`;
 
 const template2 = `|map={{Object map|mapID={{MAPID}}{{PLANE}}|objectid={{OBJECTID}}{{LOCATIONS}}}}`
 
@@ -345,7 +345,7 @@ async function getIDsAndCoords(ids) {
             }
             if (dataX >= location.west && dataX <= location.east && dataY >= location.south && dataY <= location.north) {
                 item = await updateItemBasedOnLocation(item, location)
-                const named = location.name + ':::::' + location.mapId + ':::::' + ((Object.hasOwn(location, 'member') ? location['member'] : defaultmember) ? 1 : 0);
+                const named = location.name + ':::::' + location.mapId + ':::::' + ((Object.hasOwn(location, 'member') ? location['member'] : defaultmember) ? 1 : 0) + ':::::' + (location.requirement ?? '');
                 if (!Object.hasOwn(tempData, named)) {
                     tempData[named] = {};
                 }
@@ -372,7 +372,7 @@ async function getIDsAndCoords(ids) {
     }
 
     for (const [key, data] of Object.entries(tempData)) {
-        let [locationName, mapId, member] = key.split(':::::');
+        let [locationName, mapId, member, requirement] = key.split(':::::');
         for (let [plane, locationData] of Object.entries(data)) {
             let fakePlane = plane.indexOf('-fake') > -1
             plane = plane.replace('-fake','');
@@ -380,6 +380,7 @@ async function getIDsAndCoords(ids) {
             const planeString = !fakePlane && plane > 0 ? "|plane=" + plane : ''
             if (outputFormat === 1) {
                 const memberText = member == 1 ? `|mem = Yes` : '';
+                const requirementText = requirement ? `|requirements=${requirement}` : '';
                 results.push(
                     template.replaceAll('{{LOCATIONS}}', formatLocationPins(locationData, ids.length > 1).toString().replaceAll(",|", "|"))
                         .replaceAll('{{LOCATION}}', locationName)
@@ -389,6 +390,7 @@ async function getIDsAndCoords(ids) {
                         .replaceAll('{{NAME}}', sceneryName)
                         .replaceAll('{{PLANE}}', planeString)
                         .replaceAll('{{MEMBER}}', memberText)
+                        .replaceAll('{{REQUIREMENT}}', requirementText)
                 )
                 continue;
             }
