@@ -4,7 +4,7 @@ const { type } = require('node:os');
 const localDataLocation = '../rs3cache/output'
 
 const ids = process.argv.slice(2).map((value) =>  value.split(','));
-const outputFormat = 3;
+const outputFormat = 1;
 const defaultmember = true;
 const goOnline = false;
 
@@ -94,10 +94,11 @@ const locations = [
     {name: '[[Life altar]]', west: 1024, east: 1088, north: 5569, south: 5504, mapId: '-1'},
     {name: 'House north of [[Yanille]]', west: 2564, east: 2576, north: 3128, south: 3117, mapId: '28'},
     {name: '[[Yanille]]', west: 2496, east: 2623, north: 3113, south: 3071, mapId: '28'},
+    {name: 'South of [[Yanille]]', west: 2536, east: 2622, north: 3075, south: 3040, mapId: '28'},
     {name: '[[Brimhaven]]', west: 2754, east: 2816, north: 3208, south: 3151, mapId: '28'},
     {name: '[[Port Khazard]]', west: 2626, east: 2687, north: 3197, south: 3140, mapId: '28'},
     {name: '[[Ardougne Zoo]]', west: 2591, east: 2640, north: 3290, south: 3256, mapId: '28'},
-    {name: '[[West Ardougne]]', west: 2434, east: 2559, north: 3337, south: 3264, mapId: '28'},
+    {name: '[[West Ardougne]]', west: 2434, east: 2559, north: 3337, south: 3255, mapId: '28'},
     {name: '[[Miscellania]]', west: 2490, east: 2577, north: 3906, south: 3834, mapId: '28'},
     {name: '[[Mort\'ton]]', west: 3460, east: 3525, north: 3310, south: 3259, mapId: '28'},
     {name: '[[Observatory]]', west: 2423, east: 2481, north: 3201, south: 3149, mapId: '28'},
@@ -110,7 +111,7 @@ const locations = [
     {name: '[[Ardougne Monastery]]', west: 2587, east: 2624, north: 3221, south: 3202, mapId: '28'},
     {name: 'Some house?', west: 2508, east: 2528, north: 3439, south: 3423, mapId: '-1'},
     {name: 'West of [[Varrock]]', west: 3111, east: 3119, north: 3455, south: 3448, mapId: '28', member: false},
-    {name: '[[Varrock]]', west: 3173, east: 3291, north: 3465, south: 3375, mapId: '28', member: false},
+    {name: '[[Varrock]]', west: 3173, east: 3291, north: 3470, south: 3375, mapId: '28', member: false},
     {name: '[[Dragontooth Island]]', west: 3772, east: 3843, north: 3584, south: 3519, mapId: '28'},
     {name: '[[Hazelmere\'s island]]', west: 2632, east: 2705, north: 3118, south: 3072, mapId: '28'},
     {name: '[[War\'s Retreat]]', west: 3200, east: 3328, north: 10176 , south: 10112, mapId: '10003'},
@@ -120,6 +121,7 @@ const locations = [
     {name: '[[Tarddiad]]', west: 2622, east: 2688, north: 12672, south: 12608, mapId: '-1'},
     {name: '[[Time Rune Temple]]', west: 3584, east: 3647, north: 4927, south: 4864, mapId: '755'},
     {name: '[[Crafting Guild]]', west: 2913, east: 2944, north: 3293, south: 3267, mapId: '28', member: false},
+    {name: 'East of the [[Crafting Guild]]', west: 2944, east: 3008, north: 3309, south: 3264, mapId: '28', member: false},
     {name: '[[Makeover Mage]]\'s house', west: 2914, east: 2922, north: 3325, south: 3318, mapId: '28', member: false},
     {name: '[[Golden palace]]', west: 2112, east: 2176, north: 6976, south: 6912, mapId: '-1'},
     {name: '[[Underground Pass (dungeon)|Iban\'s Lair]]', west: 2112, east: 4544, north: 4735, south: 4544, mapId: '209'},
@@ -133,6 +135,18 @@ const locations = [
     {name: '[[Lumbridge south-east mine]]', west: 3220, east: 3239, north: 3156, south: 3143, mapId: '28'},
     {name: '[[Legends\' Guild south-west mine]]', west: 2688, east: 2717, north: 3340, south: 3328, mapId: '28'},
     {name: '[[Crafting Guild Mine]]', west: 2880, east: 2943, north: 6463, south: 6400, mapId: '761'},
+    {name: '[[Tuai Leit]]', west: 1728, east: 1856, north: 12032, south: 11904, mapId: '28'},
+    {name: '[[Ranging guild]]', west: 2651, east: 2686, north: 3446, south: 3411, mapId: '28'},
+    {name: '[[Watchtower]]', west: 2542, east: 2552, north: 3120, south: 3110, mapId: '28'},
+    {name: '[[Feldip Hills]]', west: 2475, east: 2661, north: 3015, south: 2939, mapId: '28'},
+    {name: '[[Nature Grotto]]', west: 2240, east: 2303, north: 5375, south: 5312, mapId: '366'},
+    {name: '[[Glarial\'s Tomb]]', west: 2496, east: 2559, north: 9855, south: 9792, mapId: '501'},
+    {name: '[[Sinclair Mansion]]', west: 2688, east: 2761, north: 3598, south: 3520, mapId: '28'},
+    {name: 'South of [[McGrubor\'s Wood]]', west: 2624, east: 2688, north: 3471, south: 3456, mapId: '28'},
+    {name: 'West of the [[Fishing Guild]]', west: 2551, east: 2579, north: 3429, south: 3382, mapId: '28'},
+    {name: 'around the [[tree of Balance]]', west: 3295, east: 3337, north: 3356, south: 3327, mapId: '28'},
+    {name: '[[]]', west: null, east: null, north: null, south: null, mapId: '-1'},
+    {name: '[[]]', west: null, east: null, north: null, south: null, mapId: '-1'},
     {name: '[[]]', west: null, east: null, north: null, south: null, mapId: '-1'},
     {name: '[[]]', west: null, east: null, north: null, south: null, mapId: '-1'},
 ];
@@ -172,9 +186,9 @@ const ignoredLocations = [
     {name: 'Thieving Guild 2', west: 4736, south: 5888, east: 4799, north: 5951, mapId: '-1'},
     {name: 'Thieving Guild 3', west: 4608, south: 5760, east: 4671, north: 5823, mapId: '-1'},
     {name: 'Mininig and Smithing rework test square', west: 2816, south: 1600, east: 2880, north: 1664, mapId: '-1'},
-    {name: '', west: null, south: null, east: null, north: null, mapId: '-1'},
-    {name: '', west: null, south: null, east: null, north: null, mapId: '-1'},
-    {name: '', west: null, south: null, east: null, north: null, mapId: '-1'},
+    {name: 'Some cutscene place', west: 2240, south: 5670, east: 2390, north: 5824, mapId: '-1'},
+    {name: 'grand_tree_copy', west: 2304, south: 5376, east: 2367, north: 5439, mapId: '281'},
+    {name: 'Draynor Bank robbery', west: 2112, south: 4864, east: 2176, north: 4928, mapId: '-1'},
 ];
 const template = `{{ObjectLocLine|name={{NAME}}|loc={{LOCATION}}{{FLOOR}}{{MEMBER}}{{LOCATIONS}}|mapID={{MAPID}}{{PLANE}}}}`;
 
@@ -421,7 +435,12 @@ function compareItems(a, b) {
 
 
 async function updateItemBasedOnLocation(item, location){
-    if(location.name === '[[Anachronia]]'){
+
+     if(location.name === '[[Tuai Leit]]'){
+        //Coordinates for Coordinates for The Arc are offset by (31*64,-151*64).
+        item.i = item.i+31
+        item.j = item.j-151
+    }else if(location.name === '[[Anachronia]]'){
         //Coordinates for Anachronia are offset by (-23*64,31*64).
         item.i = item.i-23
         item.j = item.j+31
